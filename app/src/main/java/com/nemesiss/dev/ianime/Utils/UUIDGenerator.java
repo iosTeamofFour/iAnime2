@@ -1,0 +1,10 @@
+package com.nemesiss.dev.ianime.Utils;
+
+import java.util.UUID;
+
+public class UUIDGenerator {
+    public static String Generate() {
+        UUID uuid = UUID.randomUUID();
+        return uuid.toString();
+    }
+}
