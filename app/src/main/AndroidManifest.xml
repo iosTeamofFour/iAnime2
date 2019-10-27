@@ -21,13 +21,16 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:screenOrientation="portrait"
             android:supportsRtl="true"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-        <activity android:name=".Acitivity.WorksIndexActivity">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".Acitivity.OthersIndexActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+        </activity>
+        <activity android:name=".Acitivity.WorksIndexActivity">
+
         </activity>
         <activity android:name=".Acitivity.iAnimeActivity">
         </activity>
@@ -36,12 +39,10 @@
                 android:theme="@style/SplashScreenTheme">
         </activity>
         <activity android:name=".Acitivity.PersonIndexActivity">
-
         </activity>
         <activity
                 android:name=".Acitivity.LoginActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar">
-
         </activity>
     </application>
 

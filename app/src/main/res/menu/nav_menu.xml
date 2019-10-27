@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<group android:checkableBehavior="single">
+    <item android:id="@+id/index"
+          android:icon="@mipmap/home"
+          android:title="主页"/>
+    <item android:id="@+id/find"
+          android:icon="@mipmap/faxian"
+          android:title="发现"/>
+    <item android:id="@+id/love"
+          android:icon="@mipmap/aixin"
+          android:title="我喜欢的作品"/>
+    <item android:id="@+id/attention"
+          android:icon="@mipmap/guanzhu"
+          android:title="关注"/>
+    <item android:id="@+id/info"
+          android:icon="@mipmap/wodexiaoxi"
+          android:title="我的消息"/>
+    <item android:id="@+id/setting"
+          android:icon="@mipmap/shezhi"
+          android:title="设置"/>
+
+</group>
+</menu>
