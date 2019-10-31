@@ -22,4 +22,20 @@
         <item name="android:background">@color/WhiteText</item>
     </style>
 
+    <style name="InfoTextViewStyle" parent="Widget.AppCompat.AutoCompleteTextView">
+        <item name="android:textSize">20dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:background">@color/WhiteText</item>
+    </style>
+
+
+    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
+<!--        <item name="tabIndicatorColor">@color/WhiteText</item>-->
+        <item name="tabIndicatorHeight">0dp</item>
+        <item name="tabTextColor">@color/colorAccent</item>
+        <item name="tabSelectedTextColor">@color/colorAccent</item>
+    </style>
+
 </resources>

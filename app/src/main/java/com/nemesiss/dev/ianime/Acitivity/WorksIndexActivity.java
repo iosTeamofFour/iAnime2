@@ -30,7 +30,7 @@ import java.util.Random;
 
 import static com.nemesiss.dev.ianime.Application.iAnimeApplication.getContext;
 
-public class WorksIndexActivity extends AppCompatActivity {
+public class WorksIndexActivity extends iAnimeActivity {
 
     private EditText editText;
     private DrawerLayout drawerLayout;

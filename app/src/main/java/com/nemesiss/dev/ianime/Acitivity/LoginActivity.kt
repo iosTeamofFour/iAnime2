@@ -32,7 +32,7 @@ import android.view.inputmethod.InputMethodManager
 
 
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : iAnimeActivity() {
 
     private var LeftAdapter = SplashScrollImageAdapter(ArrayList())
     private var CenterAdapter = SplashScrollImageAdapter(ArrayList())

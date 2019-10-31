@@ -1,6 +1,5 @@
 package com.nemesiss.dev.ianime.Model.Model.Response.Data;
 
-import java.util.Date;
 
 public class WorksInfo {
     private int imageID;

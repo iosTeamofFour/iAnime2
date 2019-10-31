@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-public class OthersIndexActivity extends AppCompatActivity {
+public class OthersIndexActivity extends iAnimeActivity {
 
 
 
