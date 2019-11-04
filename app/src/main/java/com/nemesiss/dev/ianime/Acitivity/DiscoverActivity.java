@@ -97,7 +97,7 @@ public class DiscoverActivity extends iAnimeActivity {
             }
         });
         //TabLayout加载viewpager
-        //一行代码和ViewPager联动起来，简单粗暴。
+        //一行代码和ViewPager联动起来
         tabLayout.setupWithViewPager(viewPager);
         Drawable d = null;
         for (int i = 0; i < tabLayout.getTabCount(); i++){
