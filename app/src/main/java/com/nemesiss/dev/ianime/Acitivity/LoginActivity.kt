@@ -31,7 +31,6 @@ import android.view.inputmethod.InputMethodManager
 
 
 
-
 class LoginActivity : iAnimeActivity() {
 
     private var LeftAdapter = SplashScrollImageAdapter(ArrayList())
