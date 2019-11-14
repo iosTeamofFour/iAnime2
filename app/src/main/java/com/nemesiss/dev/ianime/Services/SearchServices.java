@@ -44,7 +44,6 @@ public class SearchServices {
                 WorksInfoWithIcon selected = AllWorksInfoWithIconList.get(info.getImageID(),null);
                 if(selected!=null)
                 {
-
                     AllWorksInfoWithIconList.put(selected.getImageID(),info);
                 }
                 else AllWorksInfoWithIconList.append(info.getImageID(),info);

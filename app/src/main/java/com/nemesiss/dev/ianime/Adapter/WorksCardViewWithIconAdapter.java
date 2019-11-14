@@ -50,7 +50,6 @@ public class WorksCardViewWithIconAdapter extends RecyclerView.Adapter<WorksCard
     @Override
     public void onBindViewHolder(ViewHolder holder ,int position)
     {
-
         WorksInfoWithIcon worksInfoWithIcon=worksInfoWithIcons.get(position);
         holder.nameText.setText(worksInfoWithIcon.getName());
         holder.authorText.setText(worksInfoWithIcon.getAuthorName());

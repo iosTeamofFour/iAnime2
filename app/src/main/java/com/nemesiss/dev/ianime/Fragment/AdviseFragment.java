@@ -70,8 +70,8 @@ public class AdviseFragment extends Fragment {
 
     private void initWorks() {
         worksInfoWithIconList.clear();
-        for (int i = 0; i < 2; i++) {
-            worksInfoWithIconList.add(worksInfoWithIcons[i]);
+        for (int i = 0; i <10 ; i++) {
+            worksInfoWithIconList.add(worksInfoWithIcons[i%4]);
         }
     }
 }

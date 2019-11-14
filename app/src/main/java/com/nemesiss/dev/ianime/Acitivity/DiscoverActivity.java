@@ -47,6 +47,7 @@ public class DiscoverActivity extends iAnimeActivity {
 
         //viewpager加载adapter
         viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, tabTitle));
+        viewPager.setOffscreenPageLimit(4);
         //viewPager事件
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 
