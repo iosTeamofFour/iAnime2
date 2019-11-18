@@ -1,21 +1,16 @@
 package com.nemesiss.dev.ianime.Fragment;
 
-import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import com.jakewharton.rxbinding.widget.RxSearchView;
 import com.nemesiss.dev.ianime.Adapter.SearchResultAdapter;
-import com.nemesiss.dev.ianime.Adapter.WorksCardViewWithIconAdapter;
 import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfoWithIcon;
 import com.nemesiss.dev.ianime.R;
 import rx.android.schedulers.AndroidSchedulers;

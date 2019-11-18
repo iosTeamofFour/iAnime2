@@ -2,38 +2,21 @@ package com.nemesiss.dev.ianime.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 import com.nemesiss.dev.ianime.Adapter.MyExtendableListViewAdapter;
-import com.nemesiss.dev.ianime.Adapter.WorksCardViewWithIconAdapter;
-import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfoWithIcon;
 import com.nemesiss.dev.ianime.R;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 
 public class RankFragment extends Fragment {
 
-
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     private ExpandableListView expandableListView;
-    public String[] groupString = {"最受欢迎的线稿", "最受欢迎的上色"};
-    public WorksInfoWithIcon[][] childString = {
-            {new WorksInfoWithIcon(R.drawable.image0, "first", "zoom", sdf.format(new Date())),
-                    new WorksInfoWithIcon(R.drawable.image1, "second", "zoom", sdf.format(new Date()))},
-            {new WorksInfoWithIcon(R.drawable.image2, "third", "zoom", sdf.format(new Date())),
-                    new WorksInfoWithIcon(R.drawable.image3, "second", "zoom", sdf.format(new Date()))}
-    };
+
     public RankFragment() {
         // Required empty public constructor
+
     }
 
 
@@ -68,7 +51,9 @@ public class RankFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int groupPosition, long id) {
 //                Toast.makeText(getActivity(), groupString[groupPosition], Toast.LENGTH_SHORT).show();
-                return false;
+             return false;
+
+
             }
         });
         //设置子项布局监听
@@ -83,12 +68,15 @@ public class RankFragment extends Fragment {
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-                for (int i = 0; i < 2; i++) {
+                int count = new MyExtendableListViewAdapter().getGroupCount();
+                for (int i = 0; i < count; i++) {
                     if (i != groupPosition) {
                         expandableListView.collapseGroup(i);
                     }
                 }
             }
         });
+
     }
+
 }

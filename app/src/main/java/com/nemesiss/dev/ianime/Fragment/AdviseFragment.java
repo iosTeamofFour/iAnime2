@@ -61,11 +61,11 @@ public class AdviseFragment extends Fragment {
     }
 
     private void findView() {
-        RecyclerView recyclerView = getView().findViewById(R.id.fragment_recycler_view);
-        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-        recyclerView.setLayoutManager(layoutManager);
-        worksCardViewWithIconAdapter = new WorksCardViewWithIconAdapter(worksInfoWithIconList);
-        recyclerView.setAdapter(worksCardViewWithIconAdapter);
+//        RecyclerView recyclerView = getView().findViewById(R.id.fragment_recycler_view);
+//        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+//        recyclerView.setLayoutManager(layoutManager);
+//        worksCardViewWithIconAdapter = new WorksCardViewWithIconAdapter(worksInfoWithIconList);
+//        recyclerView.setAdapter(worksCardViewWithIconAdapter);
     }
 
     private void initWorks() {

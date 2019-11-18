@@ -2,13 +2,16 @@ package com.nemesiss.dev.ianime.Adapter;
 
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfoWithIcon;
 import com.nemesiss.dev.ianime.R;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,20 +19,20 @@ import java.util.List;
 
 public class MyExtendableListViewAdapter extends BaseExpandableListAdapter {
 
-   SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     public String[] groupString = {"最受欢迎的线稿", "最受欢迎的上色"};
-    public  WorksInfoWithIcon[][] childString = {
-            { new WorksInfoWithIcon(R.drawable.image0, "first", "zoom", sdf.format(new Date())),
+    public WorksInfoWithIcon[][] childString = {
+            {       new WorksInfoWithIcon(R.drawable.image0, "first", "zoom", sdf.format(new Date())),
                     new WorksInfoWithIcon(R.drawable.image1, "second", "zoom", sdf.format(new Date()))},
-            {new WorksInfoWithIcon(R.drawable.image2, "third", "zoom", sdf.format(new Date())),
+
+            {       new WorksInfoWithIcon(R.drawable.image2, "third", "zoom", sdf.format(new Date())),
                     new WorksInfoWithIcon(R.drawable.image3, "second", "zoom", sdf.format(new Date()))}
     };
 
-    private WorksCardViewWithIconAdapter worksCardViewWithIconAdapter;
+    private WorksCardViewWithIconAdapter[] worksCardViewWithIconAdapters = new WorksCardViewWithIconAdapter[2];
     private static List<WorksInfoWithIcon> worksInfoWithIconList = new ArrayList<>();
 
-    public MyExtendableListViewAdapter()
-    {
+    public MyExtendableListViewAdapter() {
         initWorks();
     }
 
@@ -42,7 +45,7 @@ public class MyExtendableListViewAdapter extends BaseExpandableListAdapter {
     //获取指定分组中的子选项的个数
     @Override
     public int getChildrenCount(int groupPosition) {
-        return childString[groupPosition].length;
+        return 1;
     }
 
     //        获取指定的分组数据
@@ -74,43 +77,43 @@ public class MyExtendableListViewAdapter extends BaseExpandableListAdapter {
     public boolean hasStableIds() {
         return true;
     }
+
     /**
-     *
      * 获取显示指定组的视图对象
      *
      * @param groupPosition 组位置
-     * @param isExpanded 该组是展开状态还是伸缩状态
-     * @param convertView 重用已有的视图对象
-     * @param parent 返回的视图对象始终依附于的视图组
+     * @param isExpanded    该组是展开状态还是伸缩状态
+     * @param convertView   重用已有的视图对象
+     * @param parent        返回的视图对象始终依附于的视图组
      */
 // 获取显示指定分组的视图
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         GroupViewHolder groupViewHolder;
-        if (convertView == null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.partent_item,parent,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.partent_item, parent, false);
             groupViewHolder = new GroupViewHolder();
-            groupViewHolder.tvTitle = (TextView)convertView.findViewById(R.id.label_group_normal);
+            groupViewHolder.tvTitle = (TextView) convertView.findViewById(R.id.label_group_normal);
             convertView.setTag(groupViewHolder);
-        }else {
-            groupViewHolder = (GroupViewHolder)convertView.getTag();
+        } else {
+            groupViewHolder = (GroupViewHolder) convertView.getTag();
         }
         groupViewHolder.tvTitle.setText(groupString[groupPosition]);
         return convertView;
 
     }
+
     /**
-     *
      * 获取一个视图对象，显示指定组中的指定子元素数据。
      *
      * @param groupPosition 组位置
      * @param childPosition 子元素位置
-     * @param isLastChild 子元素是否处于组中的最后一个
-     * @param convertView 重用已有的视图(View)对象
-     * @param parent 返回的视图(View)对象始终依附于的视图组
+     * @param isLastChild   子元素是否处于组中的最后一个
+     * @param convertView   重用已有的视图(View)对象
+     * @param parent        返回的视图(View)对象始终依附于的视图组
      * @return
      * @see android.widget.ExpandableListAdapter#getChildView(int, int, boolean, android.view.View,
-     *      android.view.ViewGroup)
+     * android.view.ViewGroup)
      */
 
     //取得显示给定分组给定子位置的数据用的视图
@@ -118,19 +121,23 @@ public class MyExtendableListViewAdapter extends BaseExpandableListAdapter {
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         ChildViewHolder childViewHolder;
 
-        if (convertView==null){
-            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_item,parent,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.child_item, parent, false);
             childViewHolder = new ChildViewHolder();
-            childViewHolder.recyclerView = convertView.findViewById(R.id.child_recyclerView);
+            childViewHolder.linearLayout = convertView.findViewById(R.id.linear);
             convertView.setTag(childViewHolder);
 
-        }else {
+        } else {
             childViewHolder = (ChildViewHolder) convertView.getTag();
         }
+        RecyclerView recyclerView = convertView.findViewById(R.id.child_recyclerView);
         GridLayoutManager layoutManager = new GridLayoutManager(parent.getContext(), 2);
-        childViewHolder.recyclerView.setLayoutManager(layoutManager);
-        worksCardViewWithIconAdapter= new WorksCardViewWithIconAdapter(worksInfoWithIconList);
-        childViewHolder.recyclerView.setAdapter(worksCardViewWithIconAdapter);
+        recyclerView.setLayoutManager(layoutManager);
+
+        Log.d("WorksCardView",String.valueOf(childPosition));
+
+        worksCardViewWithIconAdapters[groupPosition] = new WorksCardViewWithIconAdapter(worksInfoWithIconList);
+        recyclerView.setAdapter(worksCardViewWithIconAdapters[groupPosition]);
 
         return convertView;
     }
@@ -146,13 +153,12 @@ public class MyExtendableListViewAdapter extends BaseExpandableListAdapter {
     }
 
     static class ChildViewHolder {
-       RecyclerView recyclerView;
-
+        LinearLayout linearLayout;
     }
 
-    public  void initWorks() {
+    public void initWorks() {
         worksInfoWithIconList.clear();
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 7; i++) {
             worksInfoWithIconList.add(childString[0][0]);
         }
     }

@@ -23,10 +23,9 @@ import android.view.MotionEvent
 import android.widget.EditText
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 
 import android.view.inputmethod.InputMethodManager
-
-
 
 
 
@@ -60,6 +59,7 @@ class LoginActivity : iAnimeActivity() {
     private lateinit var registerFragment: View
     private lateinit var registerButton:Button
     private lateinit var backButton:Button
+    private lateinit var loginButton:Button
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -81,6 +81,13 @@ class LoginActivity : iAnimeActivity() {
             }
 
         })
+        loginButton.setOnClickListener(object :View.OnClickListener) {
+            override fun onClick(p0:View?)
+            {
+                var intent = Intent(this@LoginActivity,WorksIndexActivity::class.java)
+                startActivity(intent)
+            }
+        }
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {

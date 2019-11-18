@@ -24,11 +24,7 @@
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Acitivity.DiscoverActivity"
                   android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".Acitivity.OthersIndexActivity">
 
@@ -41,6 +37,11 @@
         <activity
                 android:name=".Acitivity.SplashActivity"
                 android:theme="@style/SplashScreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".Acitivity.PersonIndexActivity">
         </activity>
