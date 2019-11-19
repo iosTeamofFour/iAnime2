@@ -5,8 +5,8 @@ public class AccountInfoResponse extends CommonResponse {
     private String Avatar;
     private String BackgroundPhoto;
     private String Signature;
-    private String Follower;
-    private String Following;
+    private int Follower;
+    private int Following;
     private String Rank;
 
     public String getAvatar() {
@@ -17,11 +17,11 @@ public class AccountInfoResponse extends CommonResponse {
         return BackgroundPhoto;
     }
 
-    public String getFollower() {
+    public int getFollower() {
         return Follower;
     }
 
-    public String getFollowing() {
+    public int getFollowing() {
         return Following;
     }
 
@@ -45,7 +45,7 @@ public class AccountInfoResponse extends CommonResponse {
         BackgroundPhoto = backgroundPhoto;
     }
 
-    public void setFollower(String follower) {
+    public void setFollower(int follower) {
         Follower = follower;
     }
 
@@ -53,7 +53,7 @@ public class AccountInfoResponse extends CommonResponse {
         NickName = nickName;
     }
 
-    public void setFollowing(String following) {
+    public void setFollowing(int following) {
         Following = following;
     }
 

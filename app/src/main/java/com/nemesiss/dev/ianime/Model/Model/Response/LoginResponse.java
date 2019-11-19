@@ -2,13 +2,13 @@ package com.nemesiss.dev.ianime.Model.Model.Response;
 
 public class LoginResponse extends CommonResponse {
     private String Token;
-    private String TokenExpire;
+    private int TokenExpire;
 
     public String getToken() {
         return Token;
     }
 
-    public String getTokenExpire() {
+    public int getTokenExpire() {
         return TokenExpire;
     }
 
@@ -16,7 +16,7 @@ public class LoginResponse extends CommonResponse {
         Token = token;
     }
 
-    public void setTokenExpire(String tokenExpire) {
+    public void setTokenExpire(int tokenExpire) {
         TokenExpire = tokenExpire;
     }
 }
