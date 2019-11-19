@@ -81,13 +81,13 @@ class LoginActivity : iAnimeActivity() {
             }
 
         })
-        loginButton.setOnClickListener(object :View.OnClickListener) {
-            override fun onClick(p0:View?)
-            {
-                var intent = Intent(this@LoginActivity,WorksIndexActivity::class.java)
-                startActivity(intent)
-            }
-        }
+//        loginButton.setOnClickListener(object :View.OnClickListener) {
+//            override fun onClick(p0:View?)
+//            {
+//                //var intent = Intent(this@LoginActivity,WorksIndexActivity::class.java)
+//               // startActivity(intent)
+//            }
+//        }
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
