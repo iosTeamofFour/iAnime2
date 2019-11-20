@@ -7,9 +7,10 @@ import com.nemesiss.dev.ianime.Model.Model.APIDocs;
 import com.nemesiss.dev.ianime.Model.Model.Response.AccountInfoResponse;
 import com.nemesiss.dev.ianime.Services.UserServices;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+
 import java.util.concurrent.TimeUnit;
+
+import static com.nemesiss.dev.ianime.Utils.AppUtils.GetRequest;
 
 public class GetAccountInfoTask extends CustomPostExecuteAsyncTask<String, Void,
         AccountInfoResponse> {
@@ -21,30 +22,17 @@ public class GetAccountInfoTask extends CustomPostExecuteAsyncTask<String, Void,
 
     @Override
     protected AccountInfoResponse doInBackground(String... strings) {
-        try {
-            String FullAPI;
-            if(strings[0]!=null) {
-               FullAPI = APIDocs.GetAccountInfo + strings[0];
-            }
-            else
-            {
-               FullAPI=APIDocs.GetAccountInfo+UserServices.GetUserID();
-            }
-            Request request = new Request.Builder()
-                    .url(FullAPI)
-                    .addHeader("Authorization", "Bearer " + UserServices.GetAccessToken())
-                    .build();
-            Response response = okHttpClient.newCall(request).execute();
-            if (response.isSuccessful()) {
-                String responseData = response.body().string();
-                Gson gson = new Gson();
-                AccountInfoResponse accountInfoResponse = gson.fromJson(responseData, AccountInfoResponse.class);
-                return accountInfoResponse;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+
+        String FullAPI;
+        if (strings[0] != null) {
+            FullAPI = APIDocs.GetAccountInfo + strings[0];
+        } else {
+            FullAPI = APIDocs.GetAccountInfo + UserServices.GetUserID();
         }
-        return null;
+        String responseData = GetRequest(FullAPI);
+        Gson gson = new Gson();
+        AccountInfoResponse accountInfoResponse = gson.fromJson(responseData, AccountInfoResponse.class);
+        return accountInfoResponse;
     }
 
     @Override

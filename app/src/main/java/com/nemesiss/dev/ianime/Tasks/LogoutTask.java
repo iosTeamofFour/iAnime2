@@ -5,36 +5,25 @@ import com.nemesiss.dev.ianime.InfrastructureExtension.CustomPostExecuteAsyncTas
 import com.nemesiss.dev.ianime.InfrastructureExtension.TaskPostExecuteWrapper;
 import com.nemesiss.dev.ianime.Model.Model.APIDocs;
 import com.nemesiss.dev.ianime.Model.Model.Response.CommonResponse;
-import com.nemesiss.dev.ianime.Services.UserServices;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+
 import java.util.concurrent.TimeUnit;
+
+import static com.nemesiss.dev.ianime.Utils.AppUtils.GetRequest;
 
 public class LogoutTask extends CustomPostExecuteAsyncTask<Void, Void, CommonResponse> {
     private OkHttpClient okHttpClient;
+
     public LogoutTask(TaskPostExecuteWrapper<CommonResponse> DoInPostExecute) {
         super(DoInPostExecute);
     }
 
     @Override
-    protected CommonResponse doInBackground(Void ... voids) {
-        try {
-            Request request = new Request.Builder()
-                    .url(APIDocs.Logout)
-                    .addHeader("Authorization","Bearer "+ UserServices.GetAccessToken())
-                    .build();
-            Response response = okHttpClient.newCall(request).execute();
-            if (response.isSuccessful()){
-                String responseData = response.body().string();
-                Gson gson = new Gson();
-                CommonResponse commonResponse = gson.fromJson(responseData, CommonResponse.class);
-                return commonResponse;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    protected CommonResponse doInBackground(Void... voids) {
+        String responseData = GetRequest(APIDocs.Logout);
+        Gson gson = new Gson();
+        CommonResponse commonResponse = gson.fromJson(responseData, CommonResponse.class);
+        return commonResponse;
     }
 
     @Override

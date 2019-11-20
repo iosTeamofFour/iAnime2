@@ -15,6 +15,13 @@ public class APIDocs {
     public static final String LikeOrCancel=DeploymentAddress+"/illustration/mylike";
     public static final String GetWorkDetails=DeploymentAddress+"/illustration/sketchwork?&id=";
     public static final String GetPopularSketch=DeploymentAddress+"/illustration/favorite_sketch";
+    public static final String GetPopularColor=DeploymentAddress+"/illustration/favorite_colorization";
+    public static final String GetTodayRecommend=DeploymentAddress+"/illustration/todays";
+    public static final String PostWork=DeploymentAddress+"/illustration/upload";
+    public static final String PostColorRequest=DeploymentAddress+"/illustration/colorization";
+    public static final String QueryColorProgress=DeploymentAddress+"/illustration/colorization?receipt=";
+    public static final String UploadBackgroundPhoto=DeploymentAddress+"/user/homepage";
+
 
 
 

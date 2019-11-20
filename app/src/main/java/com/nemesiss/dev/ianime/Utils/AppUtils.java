@@ -18,24 +18,26 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.widget.Toast;
-//import android.widget.Toolbar;
-import android.support.v7.widget.Toolbar;
 import com.nemesiss.dev.ianime.Application.iAnimeApplication;
 import com.nemesiss.dev.ianime.BuildConfig;
-import com.nemesiss.dev.ianime.R;
 import com.nemesiss.dev.ianime.Model.Model.Response.CommonResponse;
-import okhttp3.OkHttpClient;
-import okhttp3.Response;
+import com.nemesiss.dev.ianime.R;
+import com.nemesiss.dev.ianime.Services.UserServices;
+import okhttp3.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
+//import android.widget.Toolbar;
 
 public class AppUtils {
 
@@ -45,6 +47,45 @@ public class AppUtils {
     public static final String IMAGE_TYPE = "image/jpeg";
     public static final int TYPE_CAMERA = 1234;
 
+    public static String GetRequest(String url)
+    {
+        try {
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("Authorization", "Bearer " + UserServices.GetAccessToken())
+                    .build();
+            Response response = client.newCall(request).execute();
+            if(response.isSuccessful()) {
+                String responseData = response.body().string();
+                return responseData;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    public static String PostRequest(String url, String result)
+    {
+        try {
+            OkHttpClient client = new OkHttpClient();
+            RequestBody requestBody = FormBody.create(MediaType.parse("application/json"), result);
+            Request request = new Request.Builder()
+                    .url(url)
+                    .addHeader("Authorization", "Bearer " + UserServices.GetAccessToken())
+                    .post(requestBody)
+                    .build();
+            Response response = client.newCall(request).execute();
+
+            if (response.isSuccessful()) {
+                String responseData = response.body().string();
+                return responseData;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     public static int px2dp(Context context,float pxValue)
     {
         final float scale=context.getResources().getDisplayMetrics().density;

@@ -13,11 +13,11 @@ import okhttp3.Response;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class GetPopularSketchTask extends CustomPostExecuteAsyncTask<Void, Void,
+public class GetTodayRecommendTask extends CustomPostExecuteAsyncTask<Void, Void,
         List<PopularSketchAndColorizationResponse>> {
     private OkHttpClient okHttpClient;
-    public  GetPopularSketchTask(TaskPostExecuteWrapper<List
-            <PopularSketchAndColorizationResponse>> DoInPostExecute) {
+    public  GetTodayRecommendTask(TaskPostExecuteWrapper<List
+                <PopularSketchAndColorizationResponse>> DoInPostExecute) {
         super(DoInPostExecute);
     }
 
@@ -25,7 +25,7 @@ public class GetPopularSketchTask extends CustomPostExecuteAsyncTask<Void, Void,
     protected List<PopularSketchAndColorizationResponse> doInBackground(Void ... voids) {
         try {
             Request request = new Request.Builder()
-                    .url(APIDocs.GetPopularSketch)
+                    .url(APIDocs.GetTodayRecommend)
                     .build();
             Response response = okHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
@@ -33,8 +33,8 @@ public class GetPopularSketchTask extends CustomPostExecuteAsyncTask<Void, Void,
                 Gson gson = new Gson();
                 List<PopularSketchAndColorizationResponse> resp =
                         gson.fromJson(responseData, new TypeToken<List<PopularSketchAndColorizationResponse>>() {
-            }.getType());
-                        return resp;}
+                        }.getType());
+                return resp;}
 
         } catch (Exception e) {
             e.printStackTrace();

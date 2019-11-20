@@ -13,19 +13,20 @@ import okhttp3.Response;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-public class GetPopularSketchTask extends CustomPostExecuteAsyncTask<Void, Void,
+public class GetPopularColorTask extends CustomPostExecuteAsyncTask<Void, Void,
         List<PopularSketchAndColorizationResponse>> {
     private OkHttpClient okHttpClient;
-    public  GetPopularSketchTask(TaskPostExecuteWrapper<List
+
+    public GetPopularColorTask(TaskPostExecuteWrapper<List
             <PopularSketchAndColorizationResponse>> DoInPostExecute) {
         super(DoInPostExecute);
     }
 
     @Override
-    protected List<PopularSketchAndColorizationResponse> doInBackground(Void ... voids) {
+    protected List<PopularSketchAndColorizationResponse> doInBackground(Void... voids) {
         try {
             Request request = new Request.Builder()
-                    .url(APIDocs.GetPopularSketch)
+                    .url(APIDocs.GetPopularColor)
                     .build();
             Response response = okHttpClient.newCall(request).execute();
             if (response.isSuccessful()) {
@@ -33,14 +34,16 @@ public class GetPopularSketchTask extends CustomPostExecuteAsyncTask<Void, Void,
                 Gson gson = new Gson();
                 List<PopularSketchAndColorizationResponse> resp =
                         gson.fromJson(responseData, new TypeToken<List<PopularSketchAndColorizationResponse>>() {
-            }.getType());
-                        return resp;}
+                        }.getType());
+                return resp;
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
+
     @Override
     protected void onPreExecute() {
         super.onPreExecute();
