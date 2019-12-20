@@ -22,26 +22,30 @@
             android:screenOrientation="portrait"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".Acitivity.DiscoverActivity"
-                  android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+        <activity android:name=".Acitivity.testActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
 
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".Acitivity.DrawIndexActivity">
+
+        </activity>
+        <activity
+                android:name=".Acitivity.DiscoverActivity"
+                android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         </activity>
         <activity android:name=".Acitivity.OthersIndexActivity">
-
         </activity>
         <activity android:name=".Acitivity.WorksIndexActivity">
-
         </activity>
         <activity android:name=".Acitivity.iAnimeActivity">
         </activity>
         <activity
                 android:name=".Acitivity.SplashActivity"
                 android:theme="@style/SplashScreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".Acitivity.PersonIndexActivity">
         </activity>
@@ -49,6 +53,16 @@
                 android:name=".Acitivity.LoginActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
+
+        <provider
+                android:name="android.support.v4.content.FileProvider"
+                android:authorities="com.example.cameraalbumtest2.fileprovider"
+                android:exported="false"
+                android:grantUriPermissions="true">
+            <meta-data
+                    android:name="android.support.FILE_PROVIDER_PATHS"
+                    android:resource="@xml/file_paths"/>
+        </provider>
     </application>
 
 </manifest>

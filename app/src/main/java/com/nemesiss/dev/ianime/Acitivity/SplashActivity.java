@@ -7,6 +7,7 @@ import com.nemesiss.dev.ianime.R;
 
 import java.io.InputStream;
 
+
 public class SplashActivity extends iAnimeActivity {
 
     @Override
@@ -17,6 +18,7 @@ public class SplashActivity extends iAnimeActivity {
     }
     public void jumpToMainActivity()
     {
+
         Intent intent=new Intent(SplashActivity.this,LoginActivity.class);
         startActivity(intent);
         finish();
