@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import com.dingmouren.colorpicker.ColorPickerDialog;
 import com.dingmouren.colorpicker.OnColorPickerListener;
 import com.nemesiss.dev.ianime.R;
@@ -20,9 +21,9 @@ public class testActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
-        Button button=findViewById(R.id.button);
+        ImageButton paint=findViewById(R.id.paint);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        paint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ColorPickerDialog mColorPickerDialog = new ColorPickerDialog(
@@ -34,14 +35,14 @@ public class testActivity extends AppCompatActivity {
             }
         });
 
-        Button anchor=findViewById(R.id.anchor);
+        ImageButton anchor=findViewById(R.id.anchor);
         anchor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 tag=1;
             }
         });
-        Button markPoint=findViewById(R.id.markPoint);
+        ImageButton markPoint=findViewById(R.id.markPoint);
         markPoint.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
