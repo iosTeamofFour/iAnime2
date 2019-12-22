@@ -25,14 +25,11 @@
         <activity android:name=".Acitivity.DrawingActivity">
 
         </activity>
-        <activity android:name=".Acitivity.DrawIndexActivity">
-
-        </activity>
         <activity
                 android:name=".Acitivity.DiscoverActivity"
                 android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
         </activity>
-        <activity android:name=".Acitivity.OthersIndexActivity">
+        <activity android:name=".Acitivity.MyAndOthersIndexActivity">
         </activity>
         <activity android:name=".Acitivity.WorksIndexActivity">
         </activity>
@@ -58,15 +55,7 @@
                 android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"
                 android:exported="true"/>
 
-        <provider
-                android:name="android.support.v4.content.FileProvider"
-                android:authorities="com.example.cameraalbumtest2.fileprovider"
-                android:exported="false"
-                android:grantUriPermissions="true">
-            <meta-data
-                    android:name="android.support.FILE_PROVIDER_PATHS"
-                    android:resource="@xml/file_paths"/>
-        </provider>
+
     </application>
 
 </manifest>

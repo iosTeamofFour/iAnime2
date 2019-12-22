@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-public class OthersIndexActivity extends iAnimeActivity {
+public class MyAndOthersIndexActivity extends iAnimeActivity {
 
 
     private WorksImage[] worksImage = {

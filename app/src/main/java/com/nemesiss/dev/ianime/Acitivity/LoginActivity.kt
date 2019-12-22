@@ -1,6 +1,5 @@
 package com.nemesiss.dev.ianime.Acitivity
 
-import Utils.AsUri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
@@ -25,6 +24,7 @@ import android.content.Context
 import android.content.Intent
 
 import android.view.inputmethod.InputMethodManager
+import com.nemesiss.dev.ianime.Utils.AppUtils.GetAssetsUrl
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
 
@@ -72,7 +72,6 @@ class LoginActivity : iAnimeActivity() {
         Animator1()
         registerButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
-
                 Animator2()
             }
 
@@ -150,7 +149,7 @@ class LoginActivity : iAnimeActivity() {
         val animator2 = ObjectAnimator.ofFloat(loginFragment, "alpha", 0f, 1f)
         val animSet = AnimatorSet()
         animSet.play(animator2).after(animator1)
-        animSet.duration = 1000
+        animSet.duration = 1500
         animSet.start()
     }
 
@@ -199,7 +198,7 @@ class LoginActivity : iAnimeActivity() {
                 val fileName = "image${i % 4}.jpg"
                 val bitmap = Glide.with(this)
                     .asBitmap()
-                    .load(assets.AsUri(fileName))
+                    .load(GetAssetsUrl(fileName))
                     .submit()
                     .get()
                 LeftAdapter.bitmaps.add(bitmap)

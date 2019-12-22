@@ -1,9 +1,11 @@
 package com.nemesiss.dev.ianime.Acitivity;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.style.TtsSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
@@ -26,7 +28,7 @@ import java.util.List;
 import static com.nemesiss.dev.ianime.View.MyDrawView.circles;
 import static com.nemesiss.dev.ianime.View.MyDrawView.rects;
 
-public class DrawingActivity extends AppCompatActivity {
+public class DrawingActivity extends iAnimeActivity {
 
 
     private boolean supportAlpha; //是否支持透明度
@@ -42,7 +44,7 @@ public class DrawingActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_test);
+        setContentView(R.layout.activity_drawing);
         PinchIv = findViewById(R.id.imageView);
         LoadImage();
 
@@ -50,64 +52,53 @@ public class DrawingActivity extends AppCompatActivity {
         myDrawView.SetBackgroundPinchIv(PinchIv);
 
         ImageButton paint = findViewById(R.id.paint);
-        paint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        paint.setOnClickListener(v->{
                 ColorPickerDialog mColorPickerDialog = new ColorPickerDialog(
                         DrawingActivity.this,
                         myColor,
                         supportAlpha,
                         mOnColorPickerListener
                 ).show();
-            }
         });
 
         back = findViewById(R.id.back);
-        back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        back.setOnClickListener(v->{
                 tag = 0;
                 myDrawView.SetCanDrawDot(false);
                 back.setImageResource(R.mipmap.keyboard_arrow_left_blue);
                 anchor.setImageResource(R.mipmap.target);
                 markPoint.setImageResource(R.mipmap.dot_circle);
-
-            }
         });
 
         anchor = findViewById(R.id.anchor);
-        anchor.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        anchor.setOnClickListener(v->{
                 tag = 1;
                 myDrawView.SetCanDrawDot(true);
                 back.setImageResource(R.mipmap.keyboard_arrow_left);
                 anchor.setImageResource(R.mipmap.target_blue);
                 markPoint.setImageResource(R.mipmap.dot_circle);
-            }
         });
 
         markPoint = findViewById(R.id.markPoint);
-        markPoint.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        markPoint.setOnClickListener(v ->{
                 tag = 2;
                 myDrawView.SetCanDrawDot(true);
                 back.setImageResource(R.mipmap.keyboard_arrow_left);
                 anchor.setImageResource(R.mipmap.target);
                 markPoint.setImageResource(R.mipmap.dot_circle_blue);
-            }
         });
 
         ImageButton camera = findViewById(R.id.camera);
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        camera.setOnClickListener(v->{
                 OpenGallery(v);
                 circles.clear();
                 rects.clear();
+        });
 
-            }
+        ImageButton exit=findViewById(R.id.exit);
+        exit.setOnClickListener(v -> {
+            Intent intent=new Intent(DrawingActivity.this,WorksIndexActivity.class);
+            startActivity(intent);
         });
 
 

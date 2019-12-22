@@ -33,6 +33,8 @@ public class WorksIndexActivity extends iAnimeActivity {
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+    private Runnable ShouldHandleMenuClicked=null;
+    private float CurrentSlideOffset=0.0f;
 
     private WorksInfo[] worksInfos = {
             new WorksInfo(R.drawable.image0, "first", sdf.format(new Date())),
@@ -93,11 +95,61 @@ public class WorksIndexActivity extends iAnimeActivity {
             }
         });
 
+        drawerLayout.addDrawerListener(new DrawerLayout.SimpleDrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                if(CurrentSlideOffset>slideOffset&&slideOffset<0.015f&&ShouldHandleMenuClicked!=null){
+                    ShouldHandleMenuClicked.run();
+                    ShouldHandleMenuClicked=null;
+                    runOnUiThread(()->{
+                        navigationView.setCheckedItem(R.id.menu_none);
+                    });
+                }
+                CurrentSlideOffset=slideOffset;
+            }
+        });
 
-        //navigationView.setCheckedItem(R.id.index);
+
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId())
+                {
+                    case R.id.index:
+                        ShouldHandleMenuClicked=()->{
+                          startActivity(new Intent(WorksIndexActivity.this, MyAndOthersIndexActivity.class));
+                        };
+                        break;
+                    case R.id.discover:
+                        ShouldHandleMenuClicked=()->{
+                            Intent intent=new Intent(WorksIndexActivity.this,DiscoverActivity.class);
+                            startActivity(intent);
+                        };
+                        break;
+                    case R.id.love:
+                        ShouldHandleMenuClicked=()->{
+
+                        };
+                        break;
+                    case R.id.attention:
+                        ShouldHandleMenuClicked=()->{
+
+                        };
+                        break;
+                    case R.id.info:
+                        ShouldHandleMenuClicked=()->{
+                            Intent intent=new Intent(WorksIndexActivity.this,PersonIndexActivity.class);
+                            startActivity(intent);
+                        };
+                        break;
+                    case R.id.setting:
+                        ShouldHandleMenuClicked=()->{
+
+                        };
+                        break;
+
+                }
                 drawerLayout.closeDrawers();
                 return true;
             }
@@ -109,6 +161,8 @@ public class WorksIndexActivity extends iAnimeActivity {
         worksCardViewAdapter = new WorksCardViewAdapter(worksInfoList);
         recyclerView.setAdapter(worksCardViewAdapter);
     }
+
+
 
     private void initWorks() {
         worksInfoList.clear();
