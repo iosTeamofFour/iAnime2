@@ -3,7 +3,6 @@ package com.nemesiss.dev.ianime.Acitivity
 import Utils.AsUri
 import android.os.Bundle
 import android.os.Handler
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -26,8 +25,7 @@ import android.content.Context
 import android.content.Intent
 
 import android.view.inputmethod.InputMethodManager
-
-
+import kotlinx.android.synthetic.main.fragment_login.view.*
 
 
 class LoginActivity : iAnimeActivity() {
@@ -36,12 +34,11 @@ class LoginActivity : iAnimeActivity() {
     private var CenterAdapter = SplashScrollImageAdapter(ArrayList())
     private var RightAdapter = SplashScrollImageAdapter(ArrayList())
 
-    private var LeftLayoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
-    private var CenterLayoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
-    private var RightLayoutManager = LinearLayoutManager(this,RecyclerView.VERTICAL,false)
+    private var LeftLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+    private var CenterLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
+    private var RightLayoutManager = LinearLayoutManager(this, RecyclerView.VERTICAL, false)
 
-    private var ScrollMessageHandler : Handler = Handler {
-        msg ->
+    private var ScrollMessageHandler: Handler = Handler { msg ->
         when (msg.what) {
             1 -> LeftScroller()
             2 -> CenterScroller()
@@ -50,47 +47,48 @@ class LoginActivity : iAnimeActivity() {
         return@Handler true
     }
 
-    private lateinit var LeftScroller : ()->Unit
-    private lateinit var CenterScroller : ()->Unit
-    private lateinit var RightScroller : ()->Unit
+    private lateinit var LeftScroller: () -> Unit
+    private lateinit var CenterScroller: () -> Unit
+    private lateinit var RightScroller: () -> Unit
 
-    private lateinit var logoView : ImageView
+    private lateinit var logoView: ImageView
     private lateinit var loginFragment: View
     private lateinit var registerFragment: View
-    private lateinit var registerButton:Button
-    private lateinit var backButton:Button
-    private lateinit var loginButton:Button
-
+    private lateinit var registerButton: Button
+    private lateinit var backButton: Button
+    private lateinit var loginButton: Button
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         ApplyAdapterToImageScroller()
         LoadScrollImagesToRecycle()
         findView()
-        LeftScroller = ScrollImageActionFactory(Splash_LeftRecycle,LeftAdapter,1)
-        CenterScroller = ScrollImageActionFactory(Splash_CenterRecycle,CenterAdapter,2)
-        RightScroller = ScrollImageActionFactory(Splash_RightRecycle,RightAdapter,3)
+        LeftScroller = ScrollImageActionFactory(Splash_LeftRecycle, LeftAdapter, 1)
+        CenterScroller = ScrollImageActionFactory(Splash_CenterRecycle, CenterAdapter, 2)
+        RightScroller = ScrollImageActionFactory(Splash_RightRecycle, RightAdapter, 3)
         LeftScroller()
         CenterScroller()
         RightScroller()
         Animator1()
-        registerButton.setOnClickListener(object : View.OnClickListener{
+        registerButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
 
                 Animator2()
             }
 
         })
-//        loginButton.setOnClickListener {
-//            startActivity(Intent(this@LoginActivity,WorksIndexActivity::class.java))
-//        }
+
+
+        loginFragment.loginArrowRight.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, WorksIndexActivity::class.java))
+        }
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
         when (ev.action) {
             MotionEvent.ACTION_DOWN -> {
                 val view = currentFocus
-               hideKeyboard(ev, view, this@LoginActivity)//调用方法判断是否需要隐藏键盘
+                hideKeyboard(ev, view, this@LoginActivity)//调用方法判断是否需要隐藏键盘
             }
 
             else -> {
@@ -128,57 +126,56 @@ class LoginActivity : iAnimeActivity() {
 
     }
 
-    private fun findView()
-    {
-        logoView=findViewById(R.id.logo_imageView)
-        loginFragment=findViewById(R.id.loginFragment)
-        registerFragment=findViewById(R.id.registerFragment)
-        registerButton=findViewById(R.id.registerButton)
-        registerButton.setOnClickListener(object : View.OnClickListener{
+    private fun findView() {
+        logoView = findViewById(R.id.logo_imageView)
+        loginFragment = findViewById(R.id.loginFragment)
+        registerFragment = findViewById(R.id.registerFragment)
+        registerButton = findViewById(R.id.registerButton)
+        registerButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 Animator2()
             }
 
         })
-        backButton=findViewById(R.id.back_button)
+        backButton = findViewById(R.id.back_button)
         backButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0:View?){
+            override fun onClick(p0: View?) {
                 Animator3()
             }
         })
     }
-    private fun Animator1()
-    {
+
+    private fun Animator1() {
         val animator1 = ObjectAnimator.ofFloat(logoView, "alpha", 1f, 0f)
-        val animator2 =ObjectAnimator.ofFloat(loginFragment,"alpha",0f,1f)
+        val animator2 = ObjectAnimator.ofFloat(loginFragment, "alpha", 0f, 1f)
         val animSet = AnimatorSet()
         animSet.play(animator2).after(animator1)
         animSet.duration = 1000
         animSet.start()
     }
-    private fun Animator2()
-    {
-        registerFragment.visibility=View.VISIBLE
-        loginFragment.visibility=View.GONE
-        val animator3=ObjectAnimator.ofFloat(loginFragment,"alpha",1f,0f)
-        val animator4=ObjectAnimator.ofFloat(registerFragment,"alpha",0f,1f)
+
+    private fun Animator2() {
+        registerFragment.visibility = View.VISIBLE
+        loginFragment.visibility = View.GONE
+        val animator3 = ObjectAnimator.ofFloat(loginFragment, "alpha", 1f, 0f)
+        val animator4 = ObjectAnimator.ofFloat(registerFragment, "alpha", 0f, 1f)
         val animSet = AnimatorSet()
         animSet.play(animator4).after(animator3)
         animSet.duration = 10
         animSet.start()
     }
 
-    private fun Animator3()
-    {
-        registerFragment.visibility=View.GONE
-        loginFragment.visibility=View.VISIBLE
-        val animator3=ObjectAnimator.ofFloat(loginFragment,"alpha",0f,1f)
-        val animator4=ObjectAnimator.ofFloat(registerFragment,"alpha",1f,0f)
+    private fun Animator3() {
+        registerFragment.visibility = View.GONE
+        loginFragment.visibility = View.VISIBLE
+        val animator3 = ObjectAnimator.ofFloat(loginFragment, "alpha", 0f, 1f)
+        val animator4 = ObjectAnimator.ofFloat(registerFragment, "alpha", 1f, 0f)
         val animSet = AnimatorSet()
         animSet.play(animator3).after(animator4)
         animSet.duration = 10
         animSet.start()
     }
+
     private fun ApplyAdapterToImageScroller() {
         arrayOf(Splash_LeftRecycle, Splash_CenterRecycle, Splash_RightRecycle)
             .zip(
@@ -188,18 +185,18 @@ class LoginActivity : iAnimeActivity() {
                     Pair(RightAdapter, RightLayoutManager)
                 )
             )
-            .forEach {
-                (view, pair) ->
+            .forEach { (view, pair) ->
                 val (adapter, manager) = pair
                 view.adapter = adapter
                 view.layoutManager = manager
             }
     }
+
     private fun LoadScrollImagesToRecycle() {
 
         Thread {
             for (i in 0..11) {
-                val fileName = "image-${i % 4}.jpg"
+                val fileName = "image${i % 4}.jpg"
                 val bitmap = Glide.with(this)
                     .asBitmap()
                     .load(assets.AsUri(fileName))
@@ -217,9 +214,13 @@ class LoginActivity : iAnimeActivity() {
         }.start()
     }
 
-    private fun ScrollImageActionFactory(recyclerView : RecyclerView,adapters: SplashScrollImageAdapter, exec : Int) : ()->Unit {
+    private fun ScrollImageActionFactory(
+        recyclerView: RecyclerView,
+        adapters: SplashScrollImageAdapter,
+        exec: Int
+    ): () -> Unit {
         val rv = recyclerView
-        var lc : View? = null
+        var lc: View? = null
         return {
             if (rv.canScrollVertically(1)) {
                 val view = rv.getChildAt(0)
@@ -236,7 +237,7 @@ class LoginActivity : iAnimeActivity() {
                     runOnUiThread {
                         adapters.notifyDataSetChanged()
                         rv.scrollToPosition(0)
-                        rv.scrollBy(0,1)
+                        rv.scrollBy(0, 1)
                     }
                 } else {
                     rv.scrollBy(0, 1)

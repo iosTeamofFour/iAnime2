@@ -68,7 +68,7 @@
                 android:clickable="true"
                 app:backgroundTint="@color/colorAccent"
                 android:src="@mipmap/add_white"
-                android:id="@+id/floatingActionButton"
+                android:id="@+id/create_new_work"
                 android:layout_margin="36dp"
                 android:layout_gravity="bottom|end"
         />

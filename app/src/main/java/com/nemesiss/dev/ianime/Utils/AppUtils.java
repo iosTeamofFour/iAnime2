@@ -45,6 +45,10 @@ public class AppUtils {
     public static final String IMAGE_TYPE = "image/jpeg";
     public static final int TYPE_CAMERA = 1234;
 
+    public static String GetAssetsUrl(String FileName) {
+        return "file:///android_asset/"+ FileName;
+    }
+
     public static int px2dp(Context context,float pxValue)
     {
         final float scale=context.getResources().getDisplayMetrics().density;

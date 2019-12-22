@@ -1,23 +1,21 @@
 package com.nemesiss.dev.ianime.Acitivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-import butterknife.ButterKnife;
 import com.nemesiss.dev.ianime.Adapter.WorksCardViewAdapter;
 import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfo;
 import com.nemesiss.dev.ianime.R;
@@ -26,7 +24,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 import static com.nemesiss.dev.ianime.Application.iAnimeApplication.getContext;
 
@@ -35,7 +32,7 @@ public class WorksIndexActivity extends iAnimeActivity {
     private EditText editText;
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
-    SimpleDateFormat sdf =new SimpleDateFormat("yyyy-MM-dd" );
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
     private WorksInfo[] worksInfos = {
             new WorksInfo(R.drawable.image0, "first", sdf.format(new Date())),
@@ -60,38 +57,32 @@ public class WorksIndexActivity extends iAnimeActivity {
         navigationView = findViewById(R.id.nav_view);
 
         editText = findViewById(R.id.search_editText);
-        editText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (hasFocus) {
-                    editText.setHint("");
-                } else {
-                    editText.setHint("我的作品");
-                    //收起软键盘
-                    InputMethodManager manager = ((InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE));
-                    if (manager != null)
-                        manager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        editText.setOnFocusChangeListener((v, hasFocus) -> {
+            if (hasFocus) {
+                editText.setHint("");
+            } else {
+                editText.setHint("我的作品");
+                //收起软键盘
+                InputMethodManager manager = ((InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE));
+                if (manager != null)
+                    manager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
 
-                }
             }
+        });
+
+        FloatingActionButton createNewWork = findViewById(R.id.create_new_work);
+        createNewWork.setOnClickListener(v -> {
+            Intent intent = new Intent(WorksIndexActivity.this, DrawingActivity.class);
+            startActivity(intent);
         });
 
         ImageView avatar = findViewById(R.id.avatar);
-        avatar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                drawerLayout.openDrawer(GravityCompat.START);
-
-            }
-        });
+        avatar.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
         View view = findViewById(R.id.DrawerLayout);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editText.setHint("我的作品");
-                v.requestFocus();
-            }
+        view.setOnClickListener(v -> {
+            editText.setHint("我的作品");
+            v.requestFocus();
         });
 
         ImageView imageView = findViewById(R.id.search_image);
@@ -112,10 +103,10 @@ public class WorksIndexActivity extends iAnimeActivity {
             }
         });
 
-        RecyclerView recyclerView=findViewById(R.id.recycler_view);
-        GridLayoutManager layoutManager=new GridLayoutManager(this, 2);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
+        GridLayoutManager layoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(layoutManager);
-        worksCardViewAdapter=new WorksCardViewAdapter(worksInfoList);
+        worksCardViewAdapter = new WorksCardViewAdapter(worksInfoList);
         recyclerView.setAdapter(worksCardViewAdapter);
     }
 
