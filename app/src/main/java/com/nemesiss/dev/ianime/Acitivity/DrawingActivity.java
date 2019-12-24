@@ -1,14 +1,21 @@
 package com.nemesiss.dev.ianime.Acitivity;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Message;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.style.TtsSpan;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.Toast;
 import cn.finalteam.rxgalleryfinal.RxGalleryFinal;
 import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import cn.finalteam.rxgalleryfinal.imageloader.ImageLoaderType;
@@ -17,7 +24,9 @@ import cn.finalteam.rxgalleryfinal.rxbus.event.ImageMultipleResultEvent;
 import com.bumptech.glide.Glide;
 import com.dingmouren.colorpicker.ColorPickerDialog;
 import com.dingmouren.colorpicker.OnColorPickerListener;
+import com.nemesiss.dev.ianime.Application.iAnimeApplication;
 import com.nemesiss.dev.ianime.R;
+import com.nemesiss.dev.ianime.Services.DownLoadImageService;
 import com.nemesiss.dev.ianime.Utils.AppUtils;
 import com.nemesiss.dev.ianime.View.MyDrawView;
 import com.nemesiss.dev.ianime.View.PinchImageView;
@@ -40,6 +49,8 @@ public class DrawingActivity extends iAnimeActivity {
     private ImageButton anchor;
     private ImageButton back;
     private ImageButton markPoint;
+
+    private Uri currUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,13 +156,64 @@ public class DrawingActivity extends iAnimeActivity {
             protected void onEvent(ImageMultipleResultEvent imageMultipleResultEvent) throws Exception {
                 List<MediaBean> mb = imageMultipleResultEvent.getResult();
                 for (MediaBean mediaBean : mb) {
-                    Uri currUri = Uri.fromFile(new File(mediaBean.getOriginalPath()));
-                    Log.d("PickedImage", "被选择的图片: " + currUri.getPath());
+                    currUri = Uri.fromFile(new File(mediaBean.getOriginalPath()));
+                    //Log.d("PickedImage", "被选择的图片: " + currUri.getPath());
                     Glide.with(DrawingActivity.this).load(currUri).into(PinchIv);
                     myDrawView.InitDrawView();
                     myDrawView.DrawDotsToCanva();
+                    onDownLoad(currUri.getPath());
                 }
             }
         };
     }
+
+    private void onDownLoad(String url) {
+        if(ContextCompat.checkSelfPermission(DrawingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
+                PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(DrawingActivity.this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
+        else
+        {
+            call(url);
+        }
+
+    }
+    private void call(String url)
+    {
+        DownLoadImageService service = new DownLoadImageService(getApplicationContext(),
+                url,
+                new DownLoadImageService.ImageDownLoadCallBack() {
+
+                    @Override
+                    public void onDownLoadSuccess(Bitmap bitmap) {
+                        // 在这里执行图片保存方法
+                    }
+
+                    @Override
+                    public void onDownLoadFailed() {
+                        // 图片保存失败
+                    }
+                });
+        //启动图片下载线程
+        new Thread(service).start();
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantresults){
+        switch (requestCode)
+        {
+            case 1:
+                if(grantresults.length>0&&grantresults[0]==PackageManager.PERMISSION_GRANTED){
+                    call(currUri.getPath());
+                }
+                else{
+                    Toast.makeText(this,"You denied the permission",Toast.LENGTH_SHORT).show();
+                }
+                break;
+                default:
+        }
+    }
+
 }

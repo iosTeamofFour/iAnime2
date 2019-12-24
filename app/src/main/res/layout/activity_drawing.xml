@@ -28,7 +28,7 @@
     <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@mipmap/keyboard_arrow_left"
+            android:src="@mipmap/keyboard_arrow_left_blue"
             android:id="@+id/back"
             android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"

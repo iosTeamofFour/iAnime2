@@ -24,7 +24,11 @@ import android.content.Context
 import android.content.Intent
 
 import android.view.inputmethod.InputMethodManager
+import com.nemesiss.dev.ianime.Fragment.LoginFragment
+import com.nemesiss.dev.ianime.Model.Model.Request.LoginAndRegisterAccountInfo
+import com.nemesiss.dev.ianime.Tasks.PostLoginInfoTask
 import com.nemesiss.dev.ianime.Utils.AppUtils.GetAssetsUrl
+import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
 
@@ -56,13 +60,17 @@ class LoginActivity : iAnimeActivity() {
     private lateinit var registerFragment: View
     private lateinit var registerButton: Button
     private lateinit var backButton: Button
-    private lateinit var loginButton: Button
+    private lateinit var accountEdit:EditText
+    private lateinit var passwordEdit:EditText
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         ApplyAdapterToImageScroller()
         LoadScrollImagesToRecycle()
+
         findView()
+
         LeftScroller = ScrollImageActionFactory(Splash_LeftRecycle, LeftAdapter, 1)
         CenterScroller = ScrollImageActionFactory(Splash_CenterRecycle, CenterAdapter, 2)
         RightScroller = ScrollImageActionFactory(Splash_RightRecycle, RightAdapter, 3)
@@ -70,17 +78,7 @@ class LoginActivity : iAnimeActivity() {
         CenterScroller()
         RightScroller()
         Animator1()
-        registerButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                Animator2()
-            }
 
-        })
-
-
-        loginFragment.loginArrowRight.setOnClickListener {
-            startActivity(Intent(this@LoginActivity, WorksIndexActivity::class.java))
-        }
     }
 
     override fun dispatchTouchEvent(ev: MotionEvent): Boolean {
@@ -130,6 +128,20 @@ class LoginActivity : iAnimeActivity() {
         loginFragment = findViewById(R.id.loginFragment)
         registerFragment = findViewById(R.id.registerFragment)
         registerButton = findViewById(R.id.registerButton)
+        accountEdit=findViewById(R.id.account)
+        passwordEdit=findViewById(R.id.password)
+
+
+        loginFragment.loginArrowRight.setOnClickListener {
+            val account=accountEdit.getText().toString()
+            val password=passwordEdit.getText().toString()
+            val loginAndRegisterAccountInfo= LoginAndRegisterAccountInfo()
+            loginAndRegisterAccountInfo.phone=account
+            loginAndRegisterAccountInfo.password=password
+
+            startActivity(Intent(this@LoginActivity, WorksIndexActivity::class.java))
+        }
+
         registerButton.setOnClickListener(object : View.OnClickListener {
             override fun onClick(p0: View?) {
                 Animator2()

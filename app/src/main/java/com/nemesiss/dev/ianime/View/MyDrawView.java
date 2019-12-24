@@ -31,7 +31,7 @@ public class MyDrawView extends PinchImageView {
         mPaint = new Paint();
         mPaint.setColor(myColor);
         mPaint.setAntiAlias(true);    // 抗锯齿化
-//        InitDrawView();
+
     }
 
     public boolean CanUseCanva() {
