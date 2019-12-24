@@ -1,33 +1,30 @@
 package com.nemesiss.dev.ianime.Acitivity
 
+
+import android.animation.AnimatorSet
+import android.animation.ObjectAnimator
+import android.app.Activity
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.view.MotionEvent
 import android.view.View
+import android.view.inputmethod.InputMethodManager
+import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.nemesiss.dev.ianime.Adapter.SplashScrollImageAdapter
-import com.nemesiss.dev.ianime.R
-import kotlinx.android.synthetic.main.activity_login.*
-import android.animation.ObjectAnimator
-
-
-import android.animation.AnimatorSet
-
-import android.widget.Button
-import android.view.MotionEvent
-
-import android.widget.EditText
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
-
-import android.view.inputmethod.InputMethodManager
-import com.nemesiss.dev.ianime.Fragment.LoginFragment
+import com.nemesiss.dev.ianime.Application.iAnimeApplication
 import com.nemesiss.dev.ianime.Model.Model.Request.LoginAndRegisterAccountInfo
-import com.nemesiss.dev.ianime.Tasks.PostLoginInfoTask
+import com.nemesiss.dev.ianime.R
+import com.nemesiss.dev.ianime.Services.UserServices
 import com.nemesiss.dev.ianime.Utils.AppUtils.GetAssetsUrl
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_login.*
 import kotlinx.android.synthetic.main.fragment_login.view.*
 
@@ -60,11 +57,15 @@ class LoginActivity : iAnimeActivity() {
     private lateinit var registerFragment: View
     private lateinit var registerButton: Button
     private lateinit var backButton: Button
-    private lateinit var accountEdit:EditText
-    private lateinit var passwordEdit:EditText
+
+
+    private lateinit var userServices: UserServices
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        userServices = iAnimeApplication.getApplication()._UserServices
+
         setContentView(R.layout.activity_login)
         ApplyAdapterToImageScroller()
         LoadScrollImagesToRecycle()
@@ -128,32 +129,26 @@ class LoginActivity : iAnimeActivity() {
         loginFragment = findViewById(R.id.loginFragment)
         registerFragment = findViewById(R.id.registerFragment)
         registerButton = findViewById(R.id.registerButton)
-        accountEdit=findViewById(R.id.account)
-        passwordEdit=findViewById(R.id.password)
-
 
         loginFragment.loginArrowRight.setOnClickListener {
-            val account=accountEdit.getText().toString()
-            val password=passwordEdit.getText().toString()
-            val loginAndRegisterAccountInfo= LoginAndRegisterAccountInfo()
-            loginAndRegisterAccountInfo.phone=account
-            loginAndRegisterAccountInfo.password=password
-
-            startActivity(Intent(this@LoginActivity, WorksIndexActivity::class.java))
+            val LoginInfo = LoginAndRegisterAccountInfo(account.text.toString(),password.text.toString())
+            userServices.Login(LoginInfo) { LoginResult ->
+                when (LoginResult.statusCode) {
+                    0 -> {
+                        startActivity(Intent(this@LoginActivity, WorksIndexActivity::class.java))
+                    }
+                    -1 -> {
+                        Toast.makeText(this,"用户名或密码错误",Toast.LENGTH_SHORT).show()
+                    }
+                    -2 -> {
+                        Toast.makeText(this,"服务器出现未知错误, 请稍后再试.",Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
         }
-
-        registerButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                Animator2()
-            }
-
-        })
+        registerButton.setOnClickListener { Animator2() }
         backButton = findViewById(R.id.back_button)
-        backButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(p0: View?) {
-                Animator3()
-            }
-        })
+        backButton.setOnClickListener { Animator3() }
     }
 
     private fun Animator1() {

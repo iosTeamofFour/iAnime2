@@ -19,4 +19,9 @@ public class LoginAndRegisterAccountInfo {
     public void setPhone(String phone) {
         this.phone = phone;
     }
+
+    public LoginAndRegisterAccountInfo(String phone, String password) {
+        this.phone = phone;
+        this.password = password;
+    }
 }

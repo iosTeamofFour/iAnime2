@@ -24,11 +24,10 @@ public class GetAccountInfoTask extends CustomPostExecuteAsyncTask<String, Void,
     protected AccountInfoResponse doInBackground(String... strings) {
 
         String FullAPI;
-        if (strings[0] != null) {
-            FullAPI = APIDocs.GetAccountInfo + strings[0];
-        } else {
-            FullAPI = APIDocs.GetAccountInfo + UserServices.GetUserID();
-        }
+
+        // TODO Extract UserID From JWT Token
+        FullAPI = APIDocs.GetAccountInfo + strings[0];
+
         String responseData = GetRequest(FullAPI);
         Gson gson = new Gson();
         AccountInfoResponse accountInfoResponse = gson.fromJson(responseData, AccountInfoResponse.class);

@@ -14,12 +14,12 @@ public class NetworkStateReceiver extends BroadcastReceiver {
     {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connManager.getActiveNetworkInfo();
-        if(networkInfo!= null && networkInfo.isAvailable()) {
-            Log.d("NetworkStateReceiver","网络连通");
-           iAnimeApplication.GetCurrentNetworkStatusObservable().onNext(true);
-        } else {
-            iAnimeApplication.GetCurrentNetworkStatusObservable().onNext(false);
-            Log.d("NetworkStateReceiver","网络不通");
-        }
+//        if(networkInfo!= null && networkInfo.isAvailable()) {
+//            Log.d("NetworkStateReceiver","网络连通");
+//           iAnimeApplication.GetCurrentNetworkStatusObservable().onNext(true);
+//        } else {
+//            iAnimeApplication.GetCurrentNetworkStatusObservable().onNext(false);
+//            Log.d("NetworkStateReceiver","网络不通");
+//        }
     }
 }
