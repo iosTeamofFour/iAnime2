@@ -1,19 +1,11 @@
 package com.nemesiss.dev.ianime.Services;
 
-import android.os.AsyncTask;
-import android.util.Log;
 import android.util.SparseArray;
-import android.widget.Toast;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfoWithIcon;
+import com.nemesiss.dev.ianime.Model.Model.Response.WorksInfo.WorksInfoWithIcon;
 import com.nemesiss.dev.ianime.Utils.AppUtils;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class SearchServices {

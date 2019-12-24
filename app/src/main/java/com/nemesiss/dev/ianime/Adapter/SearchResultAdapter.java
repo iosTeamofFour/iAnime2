@@ -12,7 +12,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import com.nemesiss.dev.ianime.Application.iAnimeApplication;
 import com.nemesiss.dev.ianime.Fragment.SearchFragment;
-import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfoWithIcon;
+import com.nemesiss.dev.ianime.Model.Model.Response.WorksInfo.WorksInfoWithIcon;
 import com.nemesiss.dev.ianime.R;
 import java.util.List;
 

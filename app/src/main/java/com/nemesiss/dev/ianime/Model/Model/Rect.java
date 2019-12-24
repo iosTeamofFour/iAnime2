@@ -7,6 +7,7 @@ public class Rect {
     private float right;
     private float bottom;
 
+
     public Rect(float left,float top,float right,float bottom,int color)
     {
         this.left=left;
@@ -54,4 +55,6 @@ public class Rect {
     public void setTop(float top) {
         this.top = top;
     }
+
+
 }

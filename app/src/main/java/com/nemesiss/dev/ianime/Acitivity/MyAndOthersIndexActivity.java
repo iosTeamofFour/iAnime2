@@ -1,25 +1,17 @@
 package com.nemesiss.dev.ianime.Acitivity;
 
-import android.graphics.Color;
 import android.support.v4.widget.NestedScrollView;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Button;
-import com.nemesiss.dev.ianime.Adapter.WorksCardViewAdapter;
 import com.nemesiss.dev.ianime.Adapter.WorksImageAdapter;
-import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksImage;
-import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfo;
+import com.nemesiss.dev.ianime.Model.Model.Response.WorksInfo.WorksImage;
 import com.nemesiss.dev.ianime.R;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 public class MyAndOthersIndexActivity extends iAnimeActivity {
 

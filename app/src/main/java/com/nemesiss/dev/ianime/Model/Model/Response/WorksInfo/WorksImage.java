@@ -1,6 +1,4 @@
-package com.nemesiss.dev.ianime.Model.Model.Response.Data;
-
-import android.support.v4.view.PagerAdapter;
+package com.nemesiss.dev.ianime.Model.Model.Response.WorksInfo;
 
 public class WorksImage {
     private int image;

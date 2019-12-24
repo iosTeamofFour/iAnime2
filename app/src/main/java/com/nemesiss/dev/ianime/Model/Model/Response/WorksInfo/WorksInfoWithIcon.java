@@ -1,4 +1,4 @@
-package com.nemesiss.dev.ianime.Model.Model.Response.Data;
+package com.nemesiss.dev.ianime.Model.Model.Response.WorksInfo;
 
 public class WorksInfoWithIcon extends WorksInfo {
     private String authorName;

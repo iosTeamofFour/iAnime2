@@ -8,7 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
-import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksImage;
+import com.nemesiss.dev.ianime.Model.Model.Response.WorksInfo.WorksImage;
 import com.nemesiss.dev.ianime.R;
 import java.util.List;
 

@@ -34,8 +34,6 @@ import com.nemesiss.dev.ianime.View.PinchImageView;
 import java.io.File;
 import java.util.List;
 
-import static com.nemesiss.dev.ianime.View.MyDrawView.circles;
-import static com.nemesiss.dev.ianime.View.MyDrawView.rects;
 
 public class DrawingActivity extends iAnimeActivity {
 
@@ -102,8 +100,8 @@ public class DrawingActivity extends iAnimeActivity {
         ImageButton camera = findViewById(R.id.camera);
         camera.setOnClickListener(v->{
                 OpenGallery(v);
-                circles.clear();
-                rects.clear();
+//                circles.clear();
+//                rects.clear();
         });
 
         ImageButton exit=findViewById(R.id.exit);

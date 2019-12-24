@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfoWithIcon;
+import com.nemesiss.dev.ianime.Model.Model.Response.WorksInfo.WorksInfoWithIcon;
 import com.nemesiss.dev.ianime.R;
 
 import java.text.SimpleDateFormat;

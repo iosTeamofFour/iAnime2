@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 import com.jakewharton.rxbinding.widget.RxSearchView;
 import com.nemesiss.dev.ianime.Adapter.SearchResultAdapter;
-import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfoWithIcon;
+import com.nemesiss.dev.ianime.Model.Model.Response.WorksInfo.WorksInfoWithIcon;
 import com.nemesiss.dev.ianime.R;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;

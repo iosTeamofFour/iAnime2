@@ -16,8 +16,8 @@ public class UserServices {
 
 
 
-    private static Context ctx;
-    private static SharedPreferences sp;
+    public static Context ctx;
+    public static SharedPreferences sp;
 
     static {
         ctx = iAnimeApplication.getContext();
@@ -28,6 +28,13 @@ public class UserServices {
         SharedPreferences.Editor EditToken =  sp.edit();
         EditToken.putString("JWT",token);
         return EditToken.commit();
+    }
+    public static boolean SaveAccountPassword(LoginAndRegisterAccountInfo loginAndRegisterAccountInfo)
+    {
+        SharedPreferences.Editor editor=sp.edit();
+        editor.putString("account",loginAndRegisterAccountInfo.getPhone());
+        editor.putString("password",loginAndRegisterAccountInfo.getPassword());
+        return editor.commit();
     }
 
     public static String GetAccessToken() {
@@ -42,6 +49,11 @@ public class UserServices {
         new PostLoginInfoTask(LoginResult -> {
             if(LoginResult.getStatusCode() == 0 && !SaveAccessToken(LoginResult.getToken())) {
                 throw new IllegalStateException("Cannot save JWT Token to SharedPreferences");
+
+            }
+            if(LoginResult.getStatusCode()==0)
+            {
+                SaveAccountPassword(LoginInfo);
             }
             HandleResult.DoOnPostExecute(LoginResult);
         }).execute(LoginInfo);

@@ -4,6 +4,7 @@ import android.graphics.Paint;
 
 public class Circle {
 
+
     private float radius;
     private float centerX;
     private float centerY;

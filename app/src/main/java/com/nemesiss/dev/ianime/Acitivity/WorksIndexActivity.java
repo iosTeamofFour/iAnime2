@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 import com.nemesiss.dev.ianime.Adapter.WorksCardViewAdapter;
-import com.nemesiss.dev.ianime.Model.Model.Response.Data.WorksInfo;
+import com.nemesiss.dev.ianime.Model.Model.Response.WorksInfo.WorksInfo;
 import com.nemesiss.dev.ianime.R;
 
 import java.text.SimpleDateFormat;
