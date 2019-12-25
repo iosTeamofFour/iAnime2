@@ -41,8 +41,15 @@ public class MyAndOthersIndexActivity extends iAnimeActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                button.setText("√ 已关注");
-                button.setTextColor(getResources().getColor(R.color.GrayText));
+                if(button.getText()=="+ 关注") {
+                    button.setText("√ 已关注");
+                    button.setTextColor(getResources().getColor(R.color.GrayText));
+                }
+                else
+                {
+                    button.setText("+ 关注");
+                    button.setTextColor(getResources().getColor(R.color.colorAccent));
+                }
             }
         });
 

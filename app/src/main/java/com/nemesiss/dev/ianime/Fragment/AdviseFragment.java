@@ -2,6 +2,8 @@ package com.nemesiss.dev.ianime.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,11 +61,11 @@ public class AdviseFragment extends Fragment {
     }
 
     private void findView() {
-//        RecyclerView recyclerView = getView().findViewById(R.id.fragment_recycler_view);
-//        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
-//        recyclerView.setLayoutManager(layoutManager);
-//        worksCardViewWithIconAdapter = new WorksCardViewWithIconAdapter(worksInfoWithIconList);
-//        recyclerView.setAdapter(worksCardViewWithIconAdapter);
+        RecyclerView recyclerView = getView().findViewById(R.id.fragment_recycler_view);
+        GridLayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        recyclerView.setLayoutManager(layoutManager);
+        worksCardViewWithIconAdapter = new WorksCardViewWithIconAdapter(worksInfoWithIconList);
+        recyclerView.setAdapter(worksCardViewWithIconAdapter);
     }
 
     private void initWorks() {

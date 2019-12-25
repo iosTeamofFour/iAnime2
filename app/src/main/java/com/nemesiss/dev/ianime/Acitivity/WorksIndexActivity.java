@@ -59,11 +59,15 @@ public class WorksIndexActivity extends iAnimeActivity {
         navigationView = findViewById(R.id.nav_view);
 
         editText = findViewById(R.id.search_editText);
+//        editText.setOnClickListener(v->{
+//            editText.setFocusable(true);
+//        });
         editText.setOnFocusChangeListener((v, hasFocus) -> {
+
             if (hasFocus) {
                 editText.setHint("");
             } else {
-                editText.setHint("我的作品");
+                editText.setHint("点击搜索作品");
                 //收起软键盘
                 InputMethodManager manager = ((InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE));
                 if (manager != null)
@@ -83,7 +87,7 @@ public class WorksIndexActivity extends iAnimeActivity {
 
         View view = findViewById(R.id.DrawerLayout);
         view.setOnClickListener(v -> {
-            editText.setHint("我的作品");
+            editText.setHint("点击搜索作品");
             v.requestFocus();
         });
 
@@ -92,6 +96,10 @@ public class WorksIndexActivity extends iAnimeActivity {
             @Override
             public void onClick(View view) {
                 Toast.makeText(WorksIndexActivity.this, "开始搜索", Toast.LENGTH_SHORT).show();
+                editText.setFocusable(false);
+                InputMethodManager manager = ((InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE));
+                if (manager != null)
+                    manager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
             }
         });
 
@@ -134,7 +142,6 @@ public class WorksIndexActivity extends iAnimeActivity {
                         break;
                     case R.id.attention:
                         ShouldHandleMenuClicked=()->{
-
                         };
                         break;
                     case R.id.info:
@@ -145,7 +152,6 @@ public class WorksIndexActivity extends iAnimeActivity {
                         break;
                     case R.id.setting:
                         ShouldHandleMenuClicked=()->{
-
                         };
                         break;
 
@@ -166,7 +172,7 @@ public class WorksIndexActivity extends iAnimeActivity {
 
     private void initWorks() {
         worksInfoList.clear();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 4; i++) {
             worksInfoList.add(worksInfos[i]);
         }
     }

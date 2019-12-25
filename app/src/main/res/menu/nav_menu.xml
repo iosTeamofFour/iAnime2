@@ -15,7 +15,7 @@
           android:title="关注"/>
     <item android:id="@+id/info"
           android:icon="@mipmap/wodexiaoxi"
-          android:title="我的消息"/>
+          android:title="我的信息"/>
     <item android:id="@+id/setting"
           android:icon="@mipmap/shezhi"
           android:title="设置"/>

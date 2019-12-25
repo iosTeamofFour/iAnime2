@@ -6,7 +6,7 @@
     <ImageView
             android:layout_width="0dp"
             android:layout_height="200dp"
-            app:srcCompat="@drawable/ic_launcher_background"
+            android:src="@drawable/image2"
             android:id="@+id/imageView7" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:scaleType="fitXY" app:layout_constraintHorizontal_bias="0.0"/>
@@ -20,6 +20,7 @@
     <TextView
             android:text="ID:1106488127"
             android:textSize="12dp"
+            android:textColor="@color/WhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView9" app:layout_constraintStart_toEndOf="@+id/imageView8"
@@ -28,14 +29,15 @@
     <TextView
             android:text="zoom"
             android:textSize="20dp"
-
+            android:textColor="@color/WhiteText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/textView11" android:layout_marginStart="24dp"
             app:layout_constraintStart_toEndOf="@+id/imageView8" android:layout_marginBottom="8dp"
             app:layout_constraintBottom_toTopOf="@+id/textView9"/>
     <TextView
-            android:text="热爱生活，好好学习，天天开心sfszdfzsffsgrggrhd"
+            android:text="热爱生活，好好学习，天天开心,早睡早起"
+            android:textColor="@color/WhiteText"
             android:ellipsize="end"
             android:singleLine="true"
             android:textSize="14dp"

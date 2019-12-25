@@ -28,7 +28,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:inputType="textPersonName"
-                        android:hint="我的作品"
+                        android:hint="点击搜索作品"
                         android:textColorHint="@color/black"
                         android:gravity="center"
                         style="@style/InfoStyle"

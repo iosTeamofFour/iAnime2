@@ -11,7 +11,7 @@
     <ImageView
             android:layout_width="0dp"
             android:layout_height="180dp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/image2"
             android:id="@+id/imageView" app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
             android:scaleType="fitXY"/>
