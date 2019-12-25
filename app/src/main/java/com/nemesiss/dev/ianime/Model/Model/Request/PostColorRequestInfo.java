@@ -1,12 +1,18 @@
 package com.nemesiss.dev.ianime.Model.Model.Request;
 
+import android.graphics.Point;
+
 import java.util.List;
 
 public class PostColorRequestInfo {
     private String image;
-    List<List<Double>> points;
+    List<Point> points;
 
-    public List<List<Double>> getPoints() {
+    public void setPoints(List<Point> points) {
+        this.points = points;
+    }
+
+    public List<Point> getPoints() {
         return points;
     }
 
@@ -18,7 +24,8 @@ public class PostColorRequestInfo {
         this.image = image;
     }
 
-    public void setPoints(List<List<Double>> points) {
+    public PostColorRequestInfo(String image, List<Point> points) {
+        this.image = image;
         this.points = points;
     }
 }

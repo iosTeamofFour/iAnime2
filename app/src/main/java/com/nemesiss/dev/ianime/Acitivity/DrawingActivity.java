@@ -1,6 +1,9 @@
 package com.nemesiss.dev.ianime.Acitivity;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -20,8 +23,11 @@ import cn.finalteam.rxgalleryfinal.rxbus.event.ImageMultipleResultEvent;
 import com.bumptech.glide.Glide;
 import com.dingmouren.colorpicker.ColorPickerDialog;
 import com.dingmouren.colorpicker.OnColorPickerListener;
+import com.nemesiss.dev.ianime.Model.Model.Request.PostColorRequestInfo;
 import com.nemesiss.dev.ianime.R;
 import com.nemesiss.dev.ianime.Services.DownLoadImageService;
+import com.nemesiss.dev.ianime.Tasks.GetQueryColorProgressTask;
+import com.nemesiss.dev.ianime.Tasks.PostColorTask;
 import com.nemesiss.dev.ianime.Utils.AppUtils;
 import com.nemesiss.dev.ianime.View.MyDrawView;
 import com.nemesiss.dev.ianime.View.PinchImageView;
@@ -44,16 +50,18 @@ public class DrawingActivity extends iAnimeActivity {
     private ImageButton markPoint;
 
     private Uri currUri;
+    private String receipt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing);
-        PinchIv = findViewById(R.id.imageView);
-        LoadImage();
 
+        PinchIv = findViewById(R.id.imageView);
         myDrawView = findViewById(R.id.myDrawView);
         myDrawView.SetBackgroundPinchIv(PinchIv);
+
+        LoadImage();
 
         ImageButton paint = findViewById(R.id.paint);
         paint.setOnClickListener(v->{
@@ -95,8 +103,6 @@ public class DrawingActivity extends iAnimeActivity {
         ImageButton camera = findViewById(R.id.camera);
         camera.setOnClickListener(v->{
                 OpenGallery(v);
-//                circles.clear();
-//                rects.clear();
         });
 
         ImageButton exit=findViewById(R.id.exit);
@@ -105,9 +111,88 @@ public class DrawingActivity extends iAnimeActivity {
             startActivity(intent);
         });
 
+        ImageButton publish=findViewById(R.id.publish);
+        publish.setOnClickListener(v->{
+            AlertDialog.Builder dialog=new AlertDialog.Builder(DrawingActivity.this);
+            dialog.setTitle("提交上色请求");
+            dialog.setMessage("确定要提交上色请求吗？");
+            dialog.setCancelable(false);
+            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    startColor();
+
+                }
+            });
+            dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                }
+            });
+            dialog.show();
+        });
+
 
     }
 
+
+
+
+
+    private void startColor()
+    {
+       // PostColorRequestInfo requestInfo=new PostColorRequestInfo();
+//        new PostColorTask(TaskRet -> {
+//            if(TaskRet!=null)
+//            {
+//                if(TaskRet.getStatusCode()==0)
+//                {
+//                    ProgressDialog progressDialog=new ProgressDialog(DrawingActivity.this);
+//                    progressDialog.setTitle("上色过程");
+//                    progressDialog.setMessage("上色中......请稍等");
+//                    progressDialog.setCancelable(false);
+//                    progressDialog.show();
+//                    if(queryColor()) {
+//                        progressDialog.dismiss();
+//                    }
+//                }
+//                if(TaskRet.getStatusCode()==-1)
+//                {
+//                    Toast.makeText(DrawingActivity.this,"服务器端无法正确解析客户端的Base64",Toast.LENGTH_SHORT).show();
+//                }
+//
+//            }
+//        }).execute()
+    }
+    private boolean queryColor()
+    {
+        new GetQueryColorProgressTask(TaskRet -> {
+            if(TaskRet!=null)
+            {
+                if(TaskRet.getStatusCode()==0)
+                {
+                    Toast.makeText(DrawingActivity.this,"上色完成,已保存至个人作品类",Toast.LENGTH_SHORT).show();
+
+                }
+                if(TaskRet.getStatusCode()==1)
+                {
+                    //正在上色
+                }
+                if(TaskRet.getStatusCode()==2)
+                {
+                    //正在排队等待上色
+                }
+                if(TaskRet.getStatusCode()==-1)
+                {
+                    Toast.makeText(DrawingActivity.this,"回执ID无效",Toast.LENGTH_SHORT).show();
+                }
+            }
+        }).execute(receipt);
+
+        return true;
+    }
     public static OnColorPickerListener mOnColorPickerListener = new OnColorPickerListener() {
         @Override
         public void onColorCancel(ColorPickerDialog dialog) {//取消选择的颜色
