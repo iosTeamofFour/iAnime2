@@ -8,26 +8,47 @@
         android:orientation="vertical"
         tools:context=".Acitivity.WorkDetailActivity">
 
-    <android.support.v4.widget.NestedScrollView android:layout_width="match_parent" android:layout_height="wrap_content">
+    <android.support.v4.widget.NestedScrollView android:layout_width="match_parent"
+                                                android:layout_height="wrap_content">
 
         <android.support.constraint.ConstraintLayout android:layout_width="match_parent" android:layout_height="600dp">
 
 
             <ImageView
-                    android:id="@+id/imageView14"
-                    android:layout_width="40dp" android:layout_height="40dp"
-                    android:layout_marginTop="15dp" android:layout_marginEnd="15dp"
-                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@mipmap/menu"/>
-            <ImageView
                     android:id="@+id/works_img"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
+                    app:layout_constraintBottom_toTopOf="@+id/works_name"
                     app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" app:srcCompat="@drawable/image1"/>
+            <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorAccent" app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+                <android.support.constraint.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" android:background="@android:color/transparent"
+                >
+                    <ImageView
+                            android:id="@+id/back"
+                            android:layout_width="40dp" android:layout_height="40dp"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginTop="10dp" android:layout_marginBottom="10dp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+                            app:srcCompat="@mipmap/keyboard_arrow_left"/>
+                    <ImageView
+                            android:id="@+id/menu"
+                            android:layout_width="36dp" android:layout_height="36dp"
+                            android:layout_marginEnd="20dp" app:layout_constraintBottom_toBottomOf="@+id/back"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintTop_toTopOf="@+id/back" app:srcCompat="@drawable/menu"/>
+                </android.support.constraint.ConstraintLayout>
+            </RelativeLayout>
             <TextView
                     android:id="@+id/works_name"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" android:layout_marginStart="15dp"
+                    android:layout_height="31dp" android:layout_marginStart="15dp"
                     android:layout_marginTop="10dp"
                     android:text="@string/works_name" android:textAlignment="viewStart" android:textAllCaps="false"
                     android:textColor="@color/black" android:textSize="24sp"
@@ -73,10 +94,10 @@
                     app:layout_constraintTop_toBottomOf="@+id/user_pic"/>
             <TextView
                     android:id="@+id/works_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" android:layout_marginStart="20dp"
-                    android:layout_marginTop="35dp"
-                    android:layout_marginBottom="20dp" android:text="标签1" android:textColor="@color/colorAccent"
+                    android:layout_width="50dp"
+                    android:layout_height="24dp" android:layout_marginStart="20dp"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp" android:text="标签1 " android:textColor="@color/colorAccent"
                     android:textSize="18sp" android:textStyle="italic"
                     app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/works_desc"/>
@@ -87,7 +108,7 @@
                     android:layout_marginStart="12dp"
                     android:text="/"
                     android:textColor="@color/GrayText"
-                    android:textSize="20sp" android:textStyle="bold|italic"
+                    android:textSize="20sp" android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/works_label"
                     app:layout_constraintStart_toEndOf="@+id/works_label"
                     app:layout_constraintTop_toTopOf="@+id/works_label"/>
@@ -95,14 +116,11 @@
                     android:id="@+id/textView31"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" android:layout_marginStart="12dp"
-                    android:text="标签2" android:textColor="@color/colorAccent"
+                    android:text="标签2 " android:textColor="@color/colorAccent"
                     android:textSize="16sp" android:textStyle="italic"
                     app:layout_constraintBottom_toBottomOf="@+id/textView28"
                     app:layout_constraintStart_toEndOf="@+id/textView28"
                     app:layout_constraintTop_toTopOf="@+id/textView28"/>
-            <android.support.constraint.Group android:id="@+id/group2" android:layout_width="wrap_content"
-                                              android:layout_height="wrap_content"
-                                              android:background="@drawable/ic_launcher_background"/>
         </android.support.constraint.ConstraintLayout>
     </android.support.v4.widget.NestedScrollView>
 </LinearLayout>
