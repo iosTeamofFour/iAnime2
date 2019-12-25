@@ -22,8 +22,9 @@
             android:screenOrientation="portrait"
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".Acitivity.WorkDetailActivity">
+        </activity>
         <activity android:name=".Acitivity.DrawingActivity">
-
         </activity>
         <activity
                 android:name=".Acitivity.DiscoverActivity">
@@ -39,6 +40,7 @@
                 android:theme="@style/SplashScreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
@@ -48,13 +50,10 @@
                 android:name=".Acitivity.LoginActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
-
         <activity
-                android:theme="@style/AppTheme.NoActionBar"
                 android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"
-                android:exported="true"/>
-
-
+                android:exported="true"
+                android:theme="@style/AppTheme.NoActionBar"/>
     </application>
 
 </manifest>
