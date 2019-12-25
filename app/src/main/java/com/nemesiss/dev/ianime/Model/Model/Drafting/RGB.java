@@ -12,7 +12,7 @@ public class RGB {
     }
 
     public int ToSystemColor() {
-        int SystemColor = 0;
+        int SystemColor = 0xFF << 24;
         SystemColor |= R << 16;
         SystemColor |= G << 8;
         SystemColor |= B;

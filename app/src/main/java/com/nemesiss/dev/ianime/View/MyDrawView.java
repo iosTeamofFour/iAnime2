@@ -3,6 +3,7 @@ package com.nemesiss.dev.ianime.View;
 import android.content.Context;
 import android.graphics.*;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import com.nemesiss.dev.ianime.Model.Model.Drafting.AnchorPoint;
 import com.nemesiss.dev.ianime.Model.Model.Drafting.HintPoint;
@@ -20,8 +21,6 @@ import static com.nemesiss.dev.ianime.Acitivity.DrawingActivity.tag;
 public class MyDrawView extends PinchImageView {
 
     Paint mPaint;
-//    public static List<Circle> circles = new ArrayList<>();
-//    public static List<Rect> rects = new ArrayList<>();
 
     public HashMap<Point, AnchorPoint> anchors = new HashMap<>();
     public HashMap<Point, HintPoint> hints = new HashMap<>();
@@ -35,12 +34,16 @@ public class MyDrawView extends PinchImageView {
     private Canvas DotsCanva;
     private Bitmap SaveDotsBitmap;
     private PinchImageView background;
+    float[] MatValue = new float[9];
 
     public MyDrawView(Context context, AttributeSet attrs) {
         super(context, attrs);
         mPaint = new Paint();
         mPaint.setColor(myColor);
         mPaint.setAntiAlias(true);    // 抗锯齿化
+
+        post(this::InitDrawView);
+
     }
 
     public boolean CanUseCanva() {
@@ -52,16 +55,13 @@ public class MyDrawView extends PinchImageView {
     }
 
     public void InitDrawView() {
-        int measuredWidth = getMeasuredWidth(), measuredHeight = getMeasuredHeight();
-        SaveDotsBitmap = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888);
+        int width = getWidth(), height = getHeight();
+        SaveDotsBitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         DotsCanva = new Canvas(SaveDotsBitmap);
+        setImageBitmap(SaveDotsBitmap);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        InitDrawView();
-    }
+
 
     public void SetCanDrawDot(boolean value) {
         canDrawDot = value;
@@ -71,35 +71,18 @@ public class MyDrawView extends PinchImageView {
     public void DrawDotsToCanva() {
 
         if (CanUseCanva()) {
-//            if (circles.size() != 0) {
-//                for (int i = 0; i < circles.size(); i++) {
-//                    mPaint.setColor(circles.get(i).getColor());
-//                    DotsCanva.drawCircle(circles.get(i).getCenterX(), circles.get(i).getCenterY(),
-//                            circles.get(i).getRadius(), mPaint);
-//                }
-//            }
-//            if (rects.size() != 0) {
-//                for (int i = 0; i < rects.size(); i++) {
-//                    mPaint.setColor(rects.get(i).getColor());
-//                    DotsCanva.drawRect(rects.get(i).getLeft(), rects.get(i).getTop(), rects.get(i).getRight(),
-//                            rects.get(i).getBottom(), mPaint);
-//                }
-//            }
-            for(AnchorPoint ap : anchorDrawQueue) {
+            for (AnchorPoint ap : anchorDrawQueue) {
 
                 mPaint.setColor(ap.Color.ToSystemColor());
-                DotsCanva.drawRect(ap.getX() - 6,ap.getY() - 6,ap.getX() + 6,ap.getY() + 6,mPaint);
-                anchors.put(ap,ap);
+                DotsCanva.drawRect(ap.getX() - 6, ap.getY() - 6, ap.getX() + 6, ap.getY() + 6, mPaint);
+                anchors.put(ap, ap);
 
             }
-
             anchorDrawQueue.clear();
-
-
-            for(HintPoint hp : hintDrawQueue) {
+            for (HintPoint hp : hintDrawQueue) {
                 mPaint.setColor(hp.Color.ToSystemColor());
                 DotsCanva.drawCircle(hp.getX(), hp.getY(), 10, mPaint);
-                hints.put(hp,hp);
+                hints.put(hp, hp);
             }
 
             hintDrawQueue.clear();
@@ -108,6 +91,21 @@ public class MyDrawView extends PinchImageView {
         setImageBitmap(SaveDotsBitmap);
     }
 
+    private Point ApplyScaleToCoord(int ScreenX, int ScreenY) {
+        Matrix mat = new Matrix();
+        getCurrentImageMatrix(mat);
+        mat.getValues(MatValue);
+        float ScaleX = MatValue[0];
+        float step = 1 / ScaleX;
+
+        float OffsetX = MatValue[2];
+        float OffsetY = MatValue[5];
+
+
+         float FinalX = step * (-OffsetX + ScreenX);
+        float FinalY = step * (-OffsetY + ScreenY);
+        return new Point((int) FinalX, (int) FinalY);
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -121,15 +119,17 @@ public class MyDrawView extends PinchImageView {
             myTag = tag;
             switch (event.getAction()) {
                 case MotionEvent.ACTION_DOWN:
+
+                    int CurrX = (int) event.getX();
+                    int CurrY = (int) event.getY();
+
+                    Point MappedPoint = ApplyScaleToCoord(CurrX, CurrY);
+
                     if (myTag == 1) {
-                        anchorDrawQueue.add(new AnchorPoint((int)event.getX(),(int)event.getY(),new RGB(r,g,b)));
+                        anchorDrawQueue.add(new AnchorPoint(MappedPoint.getX(), MappedPoint.getY(), new RGB(r, g, b)));
                     }
                     if (myTag == 2) {
-//                        Circle circle = new Circle(10, event.getX(), event.getY(), myColor);
-//                        circles.add(circle);
-//                        String type = "2";
-//                        addPoint(event, type);
-                        hintDrawQueue.add(new HintPoint((int)event.getX(),(int)event.getY(),new RGB(r,g,b)));
+                        hintDrawQueue.add(new HintPoint(MappedPoint.getX(), MappedPoint.getY(), new RGB(r, g, b)));
                     }
                     break;
                 case MotionEvent.ACTION_MOVE:
@@ -145,12 +145,4 @@ public class MyDrawView extends PinchImageView {
         return true;
     }
 
-    public void addPoint(MotionEvent event, String type) {
-        List<String> aPoint = new ArrayList<>();
-        aPoint.add(Integer.toString(Color.red(myColor)));
-        aPoint.add(Integer.toString(Color.green(myColor)));
-        aPoint.add(Integer.toString(Color.blue(myColor)));
-        aPoint.add(type);
-        //points.add(aPoint);
-    }
 }
