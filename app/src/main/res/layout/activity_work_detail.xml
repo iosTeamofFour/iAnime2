@@ -17,32 +17,36 @@
             <ImageView
                     android:id="@+id/works_img"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
-                    app:layout_constraintBottom_toTopOf="@+id/works_name"
+                    android:clickable="true"
+                    android:padding="0dp" app:layout_constraintBottom_toTopOf="@+id/works_name"
                     app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" app:srcCompat="@drawable/image1"/>
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/colorAccent" app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent">
+                    android:background="@android:color/transparent"
+                    app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
                 <android.support.constraint.ConstraintLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content" android:background="@android:color/transparent"
-                >
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/transparent">
                     <ImageView
                             android:id="@+id/back"
                             android:layout_width="40dp" android:layout_height="40dp"
                             android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp" android:layout_marginBottom="10dp"
+                            android:clickable="true"
                             app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-                            app:srcCompat="@mipmap/keyboard_arrow_left"/>
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" app:srcCompat="@mipmap/keyboard_arrow_left"/>
                     <ImageView
                             android:id="@+id/menu"
                             android:layout_width="36dp" android:layout_height="36dp"
-                            android:layout_marginEnd="20dp" app:layout_constraintBottom_toBottomOf="@+id/back"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintTop_toTopOf="@+id/back" app:srcCompat="@drawable/menu"/>
+                            android:layout_marginEnd="20dp" android:clickable="true"
+                            app:layout_constraintBottom_toBottomOf="@+id/back"
+                            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="@+id/back"
+                            app:srcCompat="@drawable/menu"/>
                 </android.support.constraint.ConstraintLayout>
             </RelativeLayout>
             <TextView
@@ -61,12 +65,12 @@
                     android:layout_marginTop="8dp"
                     android:text="@string/works_id" app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/works_name"/>
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/user_pic"
-                    android:layout_width="47dp" android:layout_height="53dp"
+                    android:layout_width="50dp" android:layout_height="50dp"
                     android:layout_marginStart="15dp" android:layout_marginTop="20dp"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/works_id" app:srcCompat="@mipmap/user"/>
+                    android:src="@mipmap/ic_launcher_round"
+                    app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/works_id"/>
             <TextView
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
