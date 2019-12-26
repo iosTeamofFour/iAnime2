@@ -23,6 +23,10 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Acitivity.WorkDetailActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
         <activity android:name=".Acitivity.DrawingActivity">
         </activity>
@@ -39,17 +43,18 @@
         <activity
                 android:name=".Acitivity.SplashActivity"
                 android:theme="@style/SplashScreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
         </activity>
         <activity android:name=".Acitivity.PersonIndexActivity">
         </activity>
         <activity
                 android:name=".Acitivity.LoginActivity"
                 android:theme="@style/Theme.AppCompat.NoActionBar">
+        </activity>
+        <activity
+                android:name=".Acitivity.Util.PreviewSelectedImageActivity"
+                android:screenOrientation="portrait"
+                android:launchMode="standard">
         </activity>
         <activity
                 android:name="cn.finalteam.rxgalleryfinal.ui.activity.MediaActivity"
