@@ -34,6 +34,7 @@ import com.nemesiss.dev.ianime.Tasks.PostColorTask;
 import com.nemesiss.dev.ianime.Utils.AppUtils;
 import com.nemesiss.dev.ianime.View.MyDrawView;
 import com.nemesiss.dev.ianime.View.PinchImageView;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -58,6 +59,8 @@ public class DrawingActivity extends iAnimeActivity {
     private Uri currUri;
     private String receipt;
 
+    static CircleImageView paint;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,7 +72,7 @@ public class DrawingActivity extends iAnimeActivity {
 
         LoadImage();
 
-        ImageButton paint = findViewById(R.id.paint);
+        paint = findViewById(R.id.paint);
         paint.setOnClickListener(v -> {
             ColorPickerDialog mColorPickerDialog = new ColorPickerDialog(
                     DrawingActivity.this,
@@ -83,27 +86,27 @@ public class DrawingActivity extends iAnimeActivity {
         back.setOnClickListener(v -> {
             tag = 0;
             myDrawView.SetCanDrawDot(false);
-            back.setImageResource(R.mipmap.keyboard_arrow_left_blue);
+            back.setImageResource(R.mipmap.keyboard_arrow_left_blue64);
             anchor.setImageResource(R.mipmap.target);
-            markPoint.setImageResource(R.mipmap.dot_circle);
+            markPoint.setImageResource(R.mipmap.dotcircle);
         });
 
         anchor = findViewById(R.id.anchor);
         anchor.setOnClickListener(v -> {
             tag = 1;
             myDrawView.SetCanDrawDot(true);
-            back.setImageResource(R.mipmap.keyboard_arrow_left);
-            anchor.setImageResource(R.mipmap.target_blue);
-            markPoint.setImageResource(R.mipmap.dot_circle);
+            back.setImageResource(R.mipmap.keyboard_arrow_left_black64);
+            anchor.setImageResource(R.mipmap.targetblue);
+            markPoint.setImageResource(R.mipmap.dotcircle);
         });
 
         markPoint = findViewById(R.id.markPoint);
         markPoint.setOnClickListener(v -> {
             tag = 2;
             myDrawView.SetCanDrawDot(true);
-            back.setImageResource(R.mipmap.keyboard_arrow_left);
+            back.setImageResource(R.mipmap.keyboard_arrow_left_black64);
             anchor.setImageResource(R.mipmap.target);
-            markPoint.setImageResource(R.mipmap.dot_circle_blue);
+            markPoint.setImageResource(R.mipmap.dotcircleblue);
         });
 
         ImageButton camera = findViewById(R.id.camera);
@@ -111,11 +114,6 @@ public class DrawingActivity extends iAnimeActivity {
             OpenGallery(v);
         });
 
-        ImageButton exit = findViewById(R.id.exit);
-        exit.setOnClickListener(v -> {
-            Intent intent = new Intent(DrawingActivity.this, WorksIndexActivity.class);
-            startActivity(intent);
-        });
 
         ImageButton publish = findViewById(R.id.publish);
         publish.setOnClickListener(v -> {
@@ -232,7 +230,9 @@ public class DrawingActivity extends iAnimeActivity {
 
         @Override
         public void onColorConfirm(ColorPickerDialog dialog, int color) {//确定的颜色
+
             myColor = color;
+            paint.setBackgroundColor(color);
         }
     };
 
