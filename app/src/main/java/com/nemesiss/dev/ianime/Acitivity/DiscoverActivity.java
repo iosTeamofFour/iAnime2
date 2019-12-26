@@ -28,7 +28,6 @@ public class DiscoverActivity extends iAnimeActivity {
         setContentView(R.layout.activity_discover);
         //初始化各控件
         initView();
-
     }
 
     private void initView() {

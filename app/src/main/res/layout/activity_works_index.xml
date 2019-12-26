@@ -4,6 +4,7 @@
         xmlns:tools="http://schemas.android.com/tools" android:id="@+id/DrawerLayout"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:focusable="true"
+        android:clickable="true"
         android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -57,6 +58,9 @@
         </android.support.design.widget.AppBarLayout>
         <android.support.v7.widget.RecyclerView
                 android:paddingTop="24dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
                 android:id="@+id/recycler_view"
                 android:layout_width="match_parent"

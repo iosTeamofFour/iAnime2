@@ -3,6 +3,7 @@ package com.nemesiss.dev.ianime.Acitivity
 
 import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
+import android.animation.ValueAnimator
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -240,6 +241,13 @@ class LoginActivity : iAnimeActivity() {
         animSet.start()
     }
 
+    private fun DimScrollListModal() {
+        var animator =  ObjectAnimator.ofFloat(ScrollListModal,"alpha",1.0f,0.6f)
+        animator.duration = 500
+        animator.startDelay = 100
+        animator.start()
+    }
+
     private fun ApplyAdapterToImageScroller() {
         arrayOf(Splash_LeftRecycle, Splash_CenterRecycle, Splash_RightRecycle)
             .zip(
@@ -275,6 +283,7 @@ class LoginActivity : iAnimeActivity() {
                     RightAdapter.notifyDataSetChanged()
                 }
             }
+            runOnUiThread { DimScrollListModal() }
         }.start()
     }
 
