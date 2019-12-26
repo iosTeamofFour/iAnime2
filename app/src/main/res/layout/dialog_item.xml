@@ -21,7 +21,7 @@
             android:textSize="16sp" app:layout_constraintStart_toStartOf="@+id/textView21"
             app:layout_constraintTop_toBottomOf="@+id/textView21" tools:layout_editor_absoluteX="20dp"/>
     <TextView
-            android:id="@+id/saveSplash"
+            android:id="@+id/saveColor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:layout_marginTop="25dp"
             android:text="保存上色稿到本地" android:textColor="@color/GrayText"
@@ -33,6 +33,6 @@
             android:layout_height="wrap_content" android:layout_marginTop="25dp"
             android:layout_marginBottom="25dp" android:text="保存线稿到本地"
             android:textColor="@color/GrayText" android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="@+id/saveSplash"
-            app:layout_constraintTop_toBottomOf="@+id/saveSplash"/>
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="@+id/saveColor"
+            app:layout_constraintTop_toBottomOf="@+id/saveColor"/>
 </android.support.constraint.ConstraintLayout>

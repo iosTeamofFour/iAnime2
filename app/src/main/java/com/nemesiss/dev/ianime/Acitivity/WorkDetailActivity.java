@@ -1,18 +1,12 @@
 package com.nemesiss.dev.ianime.Acitivity;
 
-import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.nemesiss.dev.ianime.R;
 import com.nemesiss.dev.ianime.View.PinchImageView;
 
@@ -78,13 +72,15 @@ public class WorkDetailActivity extends iAnimeActivity {
         dialog.show();
 
         final TextView checkDraft = dialogView.findViewById(R.id.checkDraft);
-        final TextView saveSplash = dialogView.findViewById(R.id.saveSplash);
+        final TextView saveSplash = dialogView.findViewById(R.id.saveColor);
         final TextView saveDraft = dialogView.findViewById(R.id.saveDraft);
 
         checkDraft.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                Intent check_draft = new Intent(WorkDetailActivity.this,DrawingActivity.class);
 
+                startActivity(check_draft);
             }
         });
         saveSplash.setOnClickListener(new View.OnClickListener(){
