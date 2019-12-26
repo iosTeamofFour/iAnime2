@@ -33,8 +33,8 @@ public class WorksIndexActivity extends iAnimeActivity {
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    private Runnable ShouldHandleMenuClicked=null;
-    private float CurrentSlideOffset=0.0f;
+    private Runnable ShouldHandleMenuClicked = null;
+    private float CurrentSlideOffset = 0.0f;
 
     private WorksInfo[] worksInfos = {
             new WorksInfo(R.drawable.image0, "first", sdf.format(new Date())),
@@ -54,27 +54,13 @@ public class WorksIndexActivity extends iAnimeActivity {
         findView();
     }
 
+
     private void findView() {
         drawerLayout = findViewById(R.id.DrawerLayout);
         navigationView = findViewById(R.id.nav_view);
 
         editText = findViewById(R.id.search_editText);
-//        editText.setOnClickListener(v->{
-//            editText.setFocusable(true);
-//        });
-        editText.setOnFocusChangeListener((v, hasFocus) -> {
 
-            if (hasFocus) {
-                editText.setHint("");
-            } else {
-                editText.setHint("点击搜索作品");
-                //收起软键盘
-                InputMethodManager manager = ((InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE));
-                if (manager != null)
-                    manager.hideSoftInputFromWindow(v.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
-            }
-        });
 
         FloatingActionButton createNewWork = findViewById(R.id.create_new_work);
         createNewWork.setOnClickListener(v -> {
@@ -85,21 +71,14 @@ public class WorksIndexActivity extends iAnimeActivity {
         ImageView avatar = findViewById(R.id.avatar);
         avatar.setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
 
-        View view = findViewById(R.id.DrawerLayout);
-        view.setOnClickListener(v -> {
-            editText.setHint("点击搜索作品");
-            v.requestFocus();
-        });
 
         ImageView imageView = findViewById(R.id.search_image);
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Toast.makeText(WorksIndexActivity.this, "开始搜索", Toast.LENGTH_SHORT).show();
-                editText.setFocusable(false);
-                InputMethodManager manager = ((InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE));
-                if (manager != null)
-                    manager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                editText.clearFocus();
+                iAnimeActivity.HideKeyboard(editText);
             }
         });
 
@@ -107,14 +86,14 @@ public class WorksIndexActivity extends iAnimeActivity {
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
                 super.onDrawerSlide(drawerView, slideOffset);
-                if(CurrentSlideOffset>slideOffset&&slideOffset<0.015f&&ShouldHandleMenuClicked!=null){
+                if (CurrentSlideOffset > slideOffset && slideOffset < 0.015f && ShouldHandleMenuClicked != null) {
                     ShouldHandleMenuClicked.run();
-                    ShouldHandleMenuClicked=null;
-                    runOnUiThread(()->{
+                    ShouldHandleMenuClicked = null;
+                    runOnUiThread(() -> {
                         navigationView.setCheckedItem(R.id.menu_none);
                     });
                 }
-                CurrentSlideOffset=slideOffset;
+                CurrentSlideOffset = slideOffset;
             }
         });
 
@@ -122,36 +101,35 @@ public class WorksIndexActivity extends iAnimeActivity {
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
-                switch (menuItem.getItemId())
-                {
+                switch (menuItem.getItemId()) {
                     case R.id.index:
-                        ShouldHandleMenuClicked=()->{
-                          startActivity(new Intent(WorksIndexActivity.this, MyAndOthersIndexActivity.class));
+                        ShouldHandleMenuClicked = () -> {
+                            startActivity(new Intent(WorksIndexActivity.this, MyAndOthersIndexActivity.class));
                         };
                         break;
                     case R.id.discover:
-                        ShouldHandleMenuClicked=()->{
-                            Intent intent=new Intent(WorksIndexActivity.this,DiscoverActivity.class);
+                        ShouldHandleMenuClicked = () -> {
+                            Intent intent = new Intent(WorksIndexActivity.this, DiscoverActivity.class);
                             startActivity(intent);
                         };
                         break;
                     case R.id.love:
-                        ShouldHandleMenuClicked=()->{
+                        ShouldHandleMenuClicked = () -> {
 
                         };
                         break;
                     case R.id.attention:
-                        ShouldHandleMenuClicked=()->{
+                        ShouldHandleMenuClicked = () -> {
                         };
                         break;
                     case R.id.info:
-                        ShouldHandleMenuClicked=()->{
-                            Intent intent=new Intent(WorksIndexActivity.this,PersonIndexActivity.class);
+                        ShouldHandleMenuClicked = () -> {
+                            Intent intent = new Intent(WorksIndexActivity.this, PersonIndexActivity.class);
                             startActivity(intent);
                         };
                         break;
                     case R.id.setting:
-                        ShouldHandleMenuClicked=()->{
+                        ShouldHandleMenuClicked = () -> {
                         };
                         break;
 
@@ -167,7 +145,6 @@ public class WorksIndexActivity extends iAnimeActivity {
         worksCardViewAdapter = new WorksCardViewAdapter(worksInfoList);
         recyclerView.setAdapter(worksCardViewAdapter);
     }
-
 
 
     private void initWorks() {

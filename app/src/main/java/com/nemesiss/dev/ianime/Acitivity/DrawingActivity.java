@@ -9,9 +9,9 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
-import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -23,6 +23,9 @@ import cn.finalteam.rxgalleryfinal.rxbus.event.ImageMultipleResultEvent;
 import com.bumptech.glide.Glide;
 import com.dingmouren.colorpicker.ColorPickerDialog;
 import com.dingmouren.colorpicker.OnColorPickerListener;
+import com.nemesiss.dev.ianime.Model.Model.Drafting.AnchorPoint;
+import com.nemesiss.dev.ianime.Model.Model.Drafting.HintPoint;
+import com.nemesiss.dev.ianime.Model.Model.Drafting.Point;
 import com.nemesiss.dev.ianime.Model.Model.Request.PostColorRequestInfo;
 import com.nemesiss.dev.ianime.R;
 import com.nemesiss.dev.ianime.Services.DownLoadImageService;
@@ -33,7 +36,10 @@ import com.nemesiss.dev.ianime.View.MyDrawView;
 import com.nemesiss.dev.ianime.View.PinchImageView;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 
 public class DrawingActivity extends iAnimeActivity {
@@ -64,56 +70,56 @@ public class DrawingActivity extends iAnimeActivity {
         LoadImage();
 
         ImageButton paint = findViewById(R.id.paint);
-        paint.setOnClickListener(v->{
-                ColorPickerDialog mColorPickerDialog = new ColorPickerDialog(
-                        DrawingActivity.this,
-                        myColor,
-                        supportAlpha,
-                        mOnColorPickerListener
-                ).show();
+        paint.setOnClickListener(v -> {
+            ColorPickerDialog mColorPickerDialog = new ColorPickerDialog(
+                    DrawingActivity.this,
+                    myColor,
+                    supportAlpha,
+                    mOnColorPickerListener
+            ).show();
         });
 
         back = findViewById(R.id.back);
-        back.setOnClickListener(v->{
-                tag = 0;
-                myDrawView.SetCanDrawDot(false);
-                back.setImageResource(R.mipmap.keyboard_arrow_left_blue);
-                anchor.setImageResource(R.mipmap.target);
-                markPoint.setImageResource(R.mipmap.dot_circle);
+        back.setOnClickListener(v -> {
+            tag = 0;
+            myDrawView.SetCanDrawDot(false);
+            back.setImageResource(R.mipmap.keyboard_arrow_left_blue);
+            anchor.setImageResource(R.mipmap.target);
+            markPoint.setImageResource(R.mipmap.dot_circle);
         });
 
         anchor = findViewById(R.id.anchor);
-        anchor.setOnClickListener(v->{
-                tag = 1;
-                myDrawView.SetCanDrawDot(true);
-                back.setImageResource(R.mipmap.keyboard_arrow_left);
-                anchor.setImageResource(R.mipmap.target_blue);
-                markPoint.setImageResource(R.mipmap.dot_circle);
+        anchor.setOnClickListener(v -> {
+            tag = 1;
+            myDrawView.SetCanDrawDot(true);
+            back.setImageResource(R.mipmap.keyboard_arrow_left);
+            anchor.setImageResource(R.mipmap.target_blue);
+            markPoint.setImageResource(R.mipmap.dot_circle);
         });
 
         markPoint = findViewById(R.id.markPoint);
-        markPoint.setOnClickListener(v ->{
-                tag = 2;
-                myDrawView.SetCanDrawDot(true);
-                back.setImageResource(R.mipmap.keyboard_arrow_left);
-                anchor.setImageResource(R.mipmap.target);
-                markPoint.setImageResource(R.mipmap.dot_circle_blue);
+        markPoint.setOnClickListener(v -> {
+            tag = 2;
+            myDrawView.SetCanDrawDot(true);
+            back.setImageResource(R.mipmap.keyboard_arrow_left);
+            anchor.setImageResource(R.mipmap.target);
+            markPoint.setImageResource(R.mipmap.dot_circle_blue);
         });
 
         ImageButton camera = findViewById(R.id.camera);
-        camera.setOnClickListener(v->{
-                OpenGallery(v);
+        camera.setOnClickListener(v -> {
+            OpenGallery(v);
         });
 
-        ImageButton exit=findViewById(R.id.exit);
+        ImageButton exit = findViewById(R.id.exit);
         exit.setOnClickListener(v -> {
-            Intent intent=new Intent(DrawingActivity.this,WorksIndexActivity.class);
+            Intent intent = new Intent(DrawingActivity.this, WorksIndexActivity.class);
             startActivity(intent);
         });
 
-        ImageButton publish=findViewById(R.id.publish);
-        publish.setOnClickListener(v->{
-            AlertDialog.Builder dialog=new AlertDialog.Builder(DrawingActivity.this);
+        ImageButton publish = findViewById(R.id.publish);
+        publish.setOnClickListener(v -> {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(DrawingActivity.this);
             dialog.setTitle("提交上色请求");
             dialog.setMessage("确定要提交上色请求吗？");
             dialog.setCancelable(false);
@@ -137,62 +143,83 @@ public class DrawingActivity extends iAnimeActivity {
 
     }
 
+    private List<List<Float>> getColorPointsList() {
+        double DrawviewWidth = (double) myDrawView.getWidth(), DrawviewHeight = (double) myDrawView.getHeight();
 
+        List<List<Float>> pointsForColorize = new ArrayList<>();
 
+        for (Map.Entry<Point, AnchorPoint> pe : myDrawView.anchors.entrySet()) {
+            AnchorPoint ap = pe.getValue();
+            List<Float> list = Arrays.asList(
+                    (float) ap.getPercentageX(DrawviewWidth),
+                    (float) ap.getPercentageY(DrawviewHeight),
+                    (float) ap.Color.R,
+                    (float) ap.Color.G,
+                    (float) ap.Color.B,
+                    0f);
+            pointsForColorize.add(list);
+        }
 
+        for (Map.Entry<Point, HintPoint> pe : myDrawView.hints.entrySet()) {
+            HintPoint ap = pe.getValue();
+            List<Float> list = Arrays.asList(
+                    (float) ap.getPercentageX(DrawviewWidth),
+                    (float) ap.getPercentageY(DrawviewHeight),
+                    (float) ap.Color.R,
+                    (float) ap.Color.G,
+                    (float) ap.Color.B,
+                    2f);
+            pointsForColorize.add(list);
+        }
+        return pointsForColorize;
 
-    private void startColor()
-    {
-       // PostColorRequestInfo requestInfo=new PostColorRequestInfo();
-//        new PostColorTask(TaskRet -> {
-//            if(TaskRet!=null)
-//            {
-//                if(TaskRet.getStatusCode()==0)
-//                {
-//                    ProgressDialog progressDialog=new ProgressDialog(DrawingActivity.this);
-//                    progressDialog.setTitle("上色过程");
-//                    progressDialog.setMessage("上色中......请稍等");
-//                    progressDialog.setCancelable(false);
-//                    progressDialog.show();
-//                    if(queryColor()) {
-//                        progressDialog.dismiss();
-//                    }
-//                }
-//                if(TaskRet.getStatusCode()==-1)
-//                {
-//                    Toast.makeText(DrawingActivity.this,"服务器端无法正确解析客户端的Base64",Toast.LENGTH_SHORT).show();
-//                }
-//
-//            }
-//        }).execute()
     }
-    private boolean queryColor()
-    {
+
+
+    private void startColor() {
+        PostColorRequestInfo requestInfo = new PostColorRequestInfo(currUri.getPath(),getColorPointsList());
+        new PostColorTask(TaskRet -> {
+            if (TaskRet != null) {
+                if (TaskRet.getStatusCode() == 0) {
+                    ProgressDialog progressDialog = new ProgressDialog(DrawingActivity.this);
+                    progressDialog.setTitle("上色过程");
+                    progressDialog.setMessage("上色中......请稍等");
+                    progressDialog.setCancelable(false);
+                    progressDialog.show();
+                    if (queryColor()) {
+                        progressDialog.dismiss();
+                    }
+                }
+                if (TaskRet.getStatusCode() == -1) {
+                    Toast.makeText(DrawingActivity.this, "服务器端无法正确解析客户端的Base64", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }).execute(requestInfo);
+    }
+
+    private boolean queryColor() {
         new GetQueryColorProgressTask(TaskRet -> {
-            if(TaskRet!=null)
-            {
-                if(TaskRet.getStatusCode()==0)
-                {
-                    Toast.makeText(DrawingActivity.this,"上色完成,已保存至个人作品类",Toast.LENGTH_SHORT).show();
+            if (TaskRet != null) {
+                if (TaskRet.getStatusCode() == 0) {
+                    Toast.makeText(DrawingActivity.this, "上色完成,已保存至个人作品类", Toast.LENGTH_SHORT).show();
 
                 }
-                if(TaskRet.getStatusCode()==1)
-                {
+                if (TaskRet.getStatusCode() == 1) {
                     //正在上色
                 }
-                if(TaskRet.getStatusCode()==2)
-                {
+                if (TaskRet.getStatusCode() == 2) {
                     //正在排队等待上色
                 }
-                if(TaskRet.getStatusCode()==-1)
-                {
-                    Toast.makeText(DrawingActivity.this,"回执ID无效",Toast.LENGTH_SHORT).show();
+                if (TaskRet.getStatusCode() == -1) {
+                    Toast.makeText(DrawingActivity.this, "回执ID无效", Toast.LENGTH_SHORT).show();
                 }
             }
         }).execute(receipt);
 
         return true;
     }
+
     public static OnColorPickerListener mOnColorPickerListener = new OnColorPickerListener() {
         @Override
         public void onColorCancel(ColorPickerDialog dialog) {//取消选择的颜色
@@ -246,19 +273,17 @@ public class DrawingActivity extends iAnimeActivity {
     }
 
     private void onDownLoad(String url) {
-        if(ContextCompat.checkSelfPermission(DrawingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE)!=
-                PackageManager.PERMISSION_GRANTED){
+        if (ContextCompat.checkSelfPermission(DrawingActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE) !=
+                PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(DrawingActivity.this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        }
-        else
-        {
+        } else {
             call(url);
         }
 
     }
-    private void call(String url)
-    {
+
+    private void call(String url) {
         DownLoadImageService service = new DownLoadImageService(getApplicationContext(),
                 url,
                 new DownLoadImageService.ImageDownLoadCallBack() {
@@ -279,18 +304,16 @@ public class DrawingActivity extends iAnimeActivity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,String[] permissions,int[] grantresults){
-        switch (requestCode)
-        {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantresults) {
+        switch (requestCode) {
             case 1:
-                if(grantresults.length>0&&grantresults[0]==PackageManager.PERMISSION_GRANTED){
+                if (grantresults.length > 0 && grantresults[0] == PackageManager.PERMISSION_GRANTED) {
                     call(currUri.getPath());
-                }
-                else{
-                    Toast.makeText(this,"You denied the permission",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "You denied the permission", Toast.LENGTH_SHORT).show();
                 }
                 break;
-                default:
+            default:
         }
     }
 

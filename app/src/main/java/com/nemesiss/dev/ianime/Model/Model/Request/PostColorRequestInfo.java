@@ -6,13 +6,13 @@ import java.util.List;
 
 public class PostColorRequestInfo {
     private String image;
-    List<Point> points;
+    List<List<Float>> points;
 
-    public void setPoints(List<Point> points) {
+    public void setPoints( List<List<Float>> points) {
         this.points = points;
     }
 
-    public List<Point> getPoints() {
+    public  List<List<Float>> getPoints() {
         return points;
     }
 
@@ -24,7 +24,7 @@ public class PostColorRequestInfo {
         this.image = image;
     }
 
-    public PostColorRequestInfo(String image, List<Point> points) {
+    public PostColorRequestInfo(String image,  List<List<Float>> points) {
         this.image = image;
         this.points = points;
     }

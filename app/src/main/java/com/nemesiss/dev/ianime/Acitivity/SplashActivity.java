@@ -13,8 +13,7 @@ public class SplashActivity extends iAnimeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_splash);
-        jumpToMainActivity();
+//        jumpToMainActivity();
     }
     public void jumpToMainActivity()
     {
