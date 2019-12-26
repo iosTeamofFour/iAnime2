@@ -7,11 +7,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.bumptech.glide.Glide;
 import com.nemesiss.dev.ianime.R;
+import com.nemesiss.dev.ianime.Utils.AppUtils;
 import com.nemesiss.dev.ianime.View.PinchImageView;
 
 
 public class WorkDetailActivity extends iAnimeActivity {
+
+    private PinchImageView pinchIV;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +26,8 @@ public class WorkDetailActivity extends iAnimeActivity {
         showBigPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(WorkDetailActivity.this, PinchImageView.class);
-                startActivity(intent);
+                pinchIV = findViewById(R.id.works_img);
+                Glide.with(WorkDetailActivity.this).load(showBigPic.getDrawable()).into(pinchIV);
             }
         });
 

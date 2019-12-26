@@ -14,13 +14,14 @@
         <android.support.constraint.ConstraintLayout android:layout_width="match_parent" android:layout_height="600dp">
 
 
-            <ImageView
+            <com.nemesiss.dev.ianime.View.PinchImageView
                     android:id="@+id/works_img"
                     android:layout_width="match_parent" android:layout_height="wrap_content"
                     android:clickable="true"
                     android:padding="0dp" app:layout_constraintBottom_toTopOf="@+id/works_name"
                     app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" app:srcCompat="@drawable/image1"/>
+                    app:layout_constraintTop_toTopOf="parent" app:srcCompat="@drawable/image1"
+                    tools:srcCompat="@drawable/image1"/>
             <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
