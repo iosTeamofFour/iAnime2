@@ -42,7 +42,6 @@ public class DiscoverActivity extends iAnimeActivity {
         fragmentList.add(new SearchFragment());
 
         //声明viewPager
-
         //viewpager加载adapter
         viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, tabTitle));
         viewPager.setOffscreenPageLimit(4);//防止出现fragment布局错乱问题
@@ -66,7 +65,6 @@ public class DiscoverActivity extends iAnimeActivity {
         });
 
         //定义TabLayout
-
         //TabLayout的事件
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -79,7 +77,6 @@ public class DiscoverActivity extends iAnimeActivity {
                 }
 
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 //未选中tab的逻辑
