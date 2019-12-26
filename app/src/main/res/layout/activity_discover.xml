@@ -24,4 +24,5 @@
             android:id="@+id/view_pager"
             android:layout_weight="1"/>
 
+
 </LinearLayout>

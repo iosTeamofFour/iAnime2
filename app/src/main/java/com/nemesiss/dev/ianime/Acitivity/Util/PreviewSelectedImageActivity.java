@@ -30,8 +30,6 @@ public class PreviewSelectedImageActivity extends iAnimeActivity
 
     private Uri CurrentPreviewImageUri;
     private int CurrentPreviewImageFromGridIndex = 0;
-    private boolean IsNormalPreview = false;
-    private boolean IsDisableDelete = false;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -43,8 +41,6 @@ public class PreviewSelectedImageActivity extends iAnimeActivity
         CurrentPreviewImageFromGridIndex = getIntent().getIntExtra("PreviewImageIndex",-1);
         CurrentPreviewImageUri = getIntent().getParcelableExtra("PreviewImageUri");
 
-        IsNormalPreview = getIntent().getBooleanExtra("IsNormalPreview",false);
-        IsDisableDelete = getIntent().getBooleanExtra("IsDisableDelete",false);
         RequestRenderImage(CurrentPreviewImageUri);
     }
 

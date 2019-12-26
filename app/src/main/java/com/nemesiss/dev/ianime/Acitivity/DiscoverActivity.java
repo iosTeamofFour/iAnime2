@@ -41,9 +41,6 @@ public class DiscoverActivity extends iAnimeActivity {
         fragmentList.add(new RankFragment());
         fragmentList.add(new SearchFragment());
 
-        //声明viewPager
-
-        //viewpager加载adapter
         viewPager.setAdapter(new MyFragmentPagerAdapter(getSupportFragmentManager(), fragmentList, tabTitle));
         viewPager.setOffscreenPageLimit(4);//防止出现fragment布局错乱问题
         //viewPager事件

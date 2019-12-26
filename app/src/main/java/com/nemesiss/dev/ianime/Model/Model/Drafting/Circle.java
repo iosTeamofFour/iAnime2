@@ -1,4 +1,4 @@
-package com.nemesiss.dev.ianime.Model.Model;
+package com.nemesiss.dev.ianime.Model.Model.Drafting;
 
 import android.graphics.Paint;
 

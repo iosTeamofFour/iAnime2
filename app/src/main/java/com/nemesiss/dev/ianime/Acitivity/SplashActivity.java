@@ -13,13 +13,5 @@ public class SplashActivity extends iAnimeActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        jumpToMainActivity();
-    }
-    public void jumpToMainActivity()
-    {
-
-        Intent intent=new Intent(SplashActivity.this,LoginActivity.class);
-        startActivity(intent);
-        finish();
     }
 }

@@ -172,7 +172,6 @@ public class DrawingActivity extends iAnimeActivity {
             pointsForColorize.add(list);
         }
         return pointsForColorize;
-
     }
 
 
