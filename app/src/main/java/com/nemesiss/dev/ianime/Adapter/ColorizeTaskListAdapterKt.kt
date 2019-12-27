@@ -34,7 +34,7 @@ public class ColorizeTaskListAdapterKt(initTasks: List<ColorizeTask>, val activi
         }
     }
 
-    private fun BuildConfirmDialog() {
+    private fun BuildConfirmDialog(Index : Int, ) {
         val builder = AlertDialog.Builder(activity)
         builder.setTitle("请选择一个动作")
         builder.setMessage("针对已完成上色的作品")

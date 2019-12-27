@@ -156,8 +156,6 @@ public class DrawingActivity extends iAnimeActivity {
         ShownTaskDialog.show();
     }
 
-//        progressBar=findViewById(R.id.progressBar);
-
 
     @OnClick({R.id.SendColorizeReq})
     void SendColorizeReq(View view) {
