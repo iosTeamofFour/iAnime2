@@ -2,9 +2,6 @@ package com.nemesiss.dev.ianime.Acitivity;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -14,10 +11,10 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -47,7 +44,10 @@ import com.nemesiss.dev.ianime.View.PinchImageView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
+
+import static com.nemesiss.dev.ianime.Utils.AppUtils.EncodeFileBase64;
 
 
 public class DrawingActivity extends iAnimeActivity {
@@ -69,6 +69,7 @@ public class DrawingActivity extends iAnimeActivity {
     private ColorizeTaskListAdapterKt CurrentTaskListAdapter;
 
     static CircleImageView paint;
+    private ProgressBar progressBar;
 
     // 多功能键处理对象
 
@@ -79,7 +80,7 @@ public class DrawingActivity extends iAnimeActivity {
 
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing);
 
@@ -128,37 +129,14 @@ public class DrawingActivity extends iAnimeActivity {
         });
 
         ImageButton camera = findViewById(R.id.camera);
-        camera.setOnClickListener(v -> {
-            OpenGallery(v);
-        });
+        camera.setOnClickListener(this::OpenGallery);
 
 
         ImageButton publish = findViewById(R.id.publish);
         publish.setOnClickListener(v -> {
             BuildColorizeTaskListDialog();
-//            AlertDialog.Builder dialog = new AlertDialog.Builder(DrawingActivity.this);
-//            dialog.setTitle("提交上色请求");
-//            dialog.setMessage("确定要提交上色请求吗？");
-//            dialog.setCancelable(false);
-//            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//
-//                    BuildColorizeTaskListDialog();
-//
-////                    startColor();
-//                }
-//            });
-//            dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//
-//                }
-//            });
-//            dialog.show();
         });
     }
-
 
     private void InitTaskListAdapter() {
         CurrentTaskList = new ArrayList<>();
@@ -177,6 +155,8 @@ public class DrawingActivity extends iAnimeActivity {
         ShownTaskDialog = builder.create();
         ShownTaskDialog.show();
     }
+
+//        progressBar=findViewById(R.id.progressBar);
 
 
     @OnClick({R.id.SendColorizeReq})
@@ -233,18 +213,23 @@ public class DrawingActivity extends iAnimeActivity {
     }
 
 
-    private void startColor() {
-        PostColorRequestInfo requestInfo = new PostColorRequestInfo(currUri.getPath(),getColorPointsList());
+    private void startColor()throws IOException{
+        PostColorRequestInfo requestInfo = new PostColorRequestInfo(EncodeFileBase64(currUri.getPath()),getColorPointsList());
+ //       progressBar.setVisibility(View.VISIBLE);
+//        ProgressDialog progressDialog = new ProgressDialog(DrawingActivity.this);
+//        progressDialog.setTitle("上色过程");
+//        progressDialog.setMessage("上色中......请稍等");
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
+        //ProgressBar progressBar=new ProgressBar(DrawingActivity.this);
+        //progressBar,setProgressBarVisibility(());
         new PostColorTask(TaskRet -> {
             if (TaskRet != null) {
                 if (TaskRet.getStatusCode() == 0) {
-                    ProgressDialog progressDialog = new ProgressDialog(DrawingActivity.this);
-                    progressDialog.setTitle("上色过程");
-                    progressDialog.setMessage("上色中......请稍等");
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
+
                     if (queryColor()) {
-                        progressDialog.dismiss();
+                       // progressDialog.dismiss();
+                       // progressBar.setVisibility(View.GONE);
                     }
                 }
                 if (TaskRet.getStatusCode() == -1) {
@@ -273,8 +258,8 @@ public class DrawingActivity extends iAnimeActivity {
                 }
             }
         }).execute(receipt);
-
         return true;
+
     }
 
     public static OnColorPickerListener mOnColorPickerListener = new OnColorPickerListener() {
