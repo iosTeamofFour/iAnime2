@@ -1,11 +1,13 @@
 package com.nemesiss.dev.ianime.Tasks;
 
+import android.util.Log;
 import com.google.gson.Gson;
 import com.nemesiss.dev.ianime.InfrastructureExtension.CustomPostExecuteAsyncTask;
 import com.nemesiss.dev.ianime.InfrastructureExtension.TaskPostExecuteWrapper;
 import com.nemesiss.dev.ianime.Model.Model.APIDocs;
 import com.nemesiss.dev.ianime.Model.Model.Request.LoginAndRegisterAccountInfo;
 import com.nemesiss.dev.ianime.Model.Model.Response.LoginResponse;
+import com.nemesiss.dev.ianime.Services.UserServices;
 import okhttp3.*;
 
 import java.util.concurrent.TimeUnit;
@@ -23,8 +25,16 @@ public class PostLoginInfoTask extends CustomPostExecuteAsyncTask<LoginAndRegist
     @Override
     public LoginResponse doInBackground(LoginAndRegisterAccountInfo... loginAccountInfos) {
         try {
-            String afterEncryption = Encrypt(loginAccountInfos[0].getPassword());
-            loginAccountInfos[0].setPassword(afterEncryption);
+            if(loginAccountInfos[0].type==0) {
+                String afterEncryption = Encrypt(loginAccountInfos[0].getPassword());
+                loginAccountInfos[0].setPassword(afterEncryption);
+            }
+            else
+            {
+                String password= UserServices.sp.getString("password","");
+                Log.d("PostLogin","password"+password);
+                loginAccountInfos[0].setPassword(password);
+            }
             Gson gson = new Gson();
             String result = gson.toJson(loginAccountInfos[0], LoginAndRegisterAccountInfo.class);
             RequestBody requestBody = FormBody.create(MediaType.parse("application/json"), result);

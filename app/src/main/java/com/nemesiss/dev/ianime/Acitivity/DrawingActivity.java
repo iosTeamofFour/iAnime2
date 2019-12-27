@@ -14,6 +14,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 import cn.finalteam.rxgalleryfinal.RxGalleryFinal;
 import cn.finalteam.rxgalleryfinal.bean.MediaBean;
@@ -37,10 +38,13 @@ import com.nemesiss.dev.ianime.View.PinchImageView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+
+import static com.nemesiss.dev.ianime.Utils.AppUtils.EncodeFileBase64;
 
 
 public class DrawingActivity extends iAnimeActivity {
@@ -60,9 +64,10 @@ public class DrawingActivity extends iAnimeActivity {
     private String receipt;
 
     static CircleImageView paint;
+    private ProgressBar progressBar;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drawing);
 
@@ -123,9 +128,15 @@ public class DrawingActivity extends iAnimeActivity {
             dialog.setCancelable(false);
             dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialog, int which) {
+                public void onClick(DialogInterface dialog, int which){
 
-                    startColor();
+                    try {
+                        startColor();
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
 
                 }
             });
@@ -137,6 +148,8 @@ public class DrawingActivity extends iAnimeActivity {
             });
             dialog.show();
         });
+
+        progressBar=findViewById(R.id.progressBar);
 
 
     }
@@ -174,18 +187,23 @@ public class DrawingActivity extends iAnimeActivity {
     }
 
 
-    private void startColor() {
-        PostColorRequestInfo requestInfo = new PostColorRequestInfo(currUri.getPath(),getColorPointsList());
+    private void startColor()throws IOException{
+        PostColorRequestInfo requestInfo = new PostColorRequestInfo(EncodeFileBase64(currUri.getPath()),getColorPointsList());
+ //       progressBar.setVisibility(View.VISIBLE);
+//        ProgressDialog progressDialog = new ProgressDialog(DrawingActivity.this);
+//        progressDialog.setTitle("上色过程");
+//        progressDialog.setMessage("上色中......请稍等");
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
+        //ProgressBar progressBar=new ProgressBar(DrawingActivity.this);
+        //progressBar,setProgressBarVisibility(());
         new PostColorTask(TaskRet -> {
             if (TaskRet != null) {
                 if (TaskRet.getStatusCode() == 0) {
-                    ProgressDialog progressDialog = new ProgressDialog(DrawingActivity.this);
-                    progressDialog.setTitle("上色过程");
-                    progressDialog.setMessage("上色中......请稍等");
-                    progressDialog.setCancelable(false);
-                    progressDialog.show();
+
                     if (queryColor()) {
-                        progressDialog.dismiss();
+                       // progressDialog.dismiss();
+                       // progressBar.setVisibility(View.GONE);
                     }
                 }
                 if (TaskRet.getStatusCode() == -1) {
@@ -214,8 +232,8 @@ public class DrawingActivity extends iAnimeActivity {
                 }
             }
         }).execute(receipt);
-
         return true;
+
     }
 
     public static OnColorPickerListener mOnColorPickerListener = new OnColorPickerListener() {

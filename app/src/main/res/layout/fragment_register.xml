@@ -43,6 +43,7 @@
     <EditText
             android:background="@drawable/edit_background"
             android:hint="输入密码"
+            android:inputType="textPassword"
             android:textColorHint="@color/WhiteText"
             android:singleLine="true"
             android:textSize="16dp"
@@ -56,6 +57,7 @@
     <EditText
             android:background="@drawable/edit_background"
             android:hint="重复输入密码"
+            android:inputType="textPassword"
             android:textColorHint="@color/WhiteText"
             android:singleLine="true"
             android:textSize="16dp"

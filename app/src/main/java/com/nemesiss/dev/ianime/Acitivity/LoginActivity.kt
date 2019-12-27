@@ -11,6 +11,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.MotionEvent
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -21,6 +23,7 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.nemesiss.dev.ianime.Adapter.SplashScrollImageAdapter
 import com.nemesiss.dev.ianime.Application.iAnimeApplication
+import com.nemesiss.dev.ianime.Fragment.LoginFragment
 import com.nemesiss.dev.ianime.Model.Model.Request.LoginAndRegisterAccountInfo
 import com.nemesiss.dev.ianime.R
 import com.nemesiss.dev.ianime.Services.UserServices
@@ -82,8 +85,7 @@ class LoginActivity : iAnimeActivity() {
         LeftScroller()
         CenterScroller()
         RightScroller()
-        Animator1()
-        //tryAutoLogin()
+
 
     }
 
@@ -135,22 +137,56 @@ class LoginActivity : iAnimeActivity() {
         registerFragment = findViewById(R.id.registerFragment)
         registerButton = findViewById(R.id.registerButton)
 
+        Animator1()
+        var LoginInfo= LoginAndRegisterAccountInfo()
+        if(tryAutoLogin())
+        {
+            LoginInfo.type=1
+        }
         loginFragment.loginArrowRight.setOnClickListener {
-                val LoginInfo = LoginAndRegisterAccountInfo(account.text.toString(), password.text.toString())
-//                userServices.Login(LoginInfo) { LoginResult ->
-//                    when (LoginResult.statusCode) {
-//                        0 -> {
+            //LoginInfo = LoginAndRegisterAccountInfo(account.text.toString(), password.text.toString())
+            LoginInfo.phone=account.text.toString()
+            LoginInfo.password=password.text.toString()
+                userServices.Login(LoginInfo) { LoginResult ->
+                    when (LoginResult.statusCode) {
+                        0 -> {
                             startActivity(Intent(this@LoginActivity, WorksIndexActivity::class.java))
-//                        }
-//                        -1 -> {
-//                            Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show()
-//                        }
-//                        -2 -> {
-//                            Toast.makeText(this, "服务器出现未知错误, 请稍后再试.", Toast.LENGTH_SHORT).show()
-//                        }
-//                    }
-//                }
+                        }
+                        -1 -> {
+                            Toast.makeText(this, "用户名或密码错误", Toast.LENGTH_SHORT).show()
+                        }
+                        -2 -> {
+                            Toast.makeText(this, "服务器出现未知错误, 请稍后再试.", Toast.LENGTH_SHORT).show()
+                       }
+                    }
+                }
 
+        }
+
+//
+//        loginFragment.password.addTextChangedListener(object : TextWatcher {
+//            override fun afterTextChanged(s: Editable?) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//            }
+//
+//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+//                TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                password.setText("")
+//                LoginInfo.type=0
+//            }
+//
+//        })
+
+
+
+
+
+        loginFragment.tourist.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, WorksIndexActivity::class.java))
         }
 
         registerFragment.start_register.setOnClickListener {
@@ -159,8 +195,9 @@ class LoginActivity : iAnimeActivity() {
                 Toast.makeText(this,"两次输入的密码不一致，请重新输入",Toast.LENGTH_SHORT).show();
             }
             else {
-                val RegisterInfo =
-                    LoginAndRegisterAccountInfo(reg_account.text.toString(), reg_password.text.toString())
+                var RegisterInfo = LoginAndRegisterAccountInfo()
+                RegisterInfo.phone=reg_account.text.toString()
+                RegisterInfo.password= reg_password.text.toString()
                 userServices.Register(RegisterInfo) { HandleResult ->
 
                     when (HandleResult.statusCode) {
@@ -184,31 +221,19 @@ class LoginActivity : iAnimeActivity() {
         backButton = findViewById(R.id.back_button)
         backButton.setOnClickListener { Animator3() }
     }
-//    private fun tryAutoLogin()
-//    {
-//        val autoAccoun=sp.getString("account","")
-//        val autoPassword=sp.getString("password","")
-//        account.setText(autoAccoun)
-//        password.setText(autoPassword)
-//        val LoginInfo = LoginAndRegisterAccountInfo(account.text.toString(), password.text.toString())
-//        userServices.Login(LoginInfo) { LoginResult ->
-//            when (LoginResult.statusCode) {
-//                0 -> {
-//                    startActivity(Intent(this@LoginActivity, WorksIndexActivity::class.java))
-//                }
-//                -1 -> {
-//                    account.setText("")
-//                    password.setText("")
-//                    Toast.makeText(this, "尝试自动登录失败", Toast.LENGTH_SHORT).show()
-//                }
-//                -2 -> {
-//                    account.setText("")
-//                    password.setText("")
-//                    Toast.makeText(this, "尝试自动登录失败", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//        }
-//    }
+    private fun tryAutoLogin():Boolean
+    {
+        val autoAccoun=sp.getString("account","")
+        val autoPassword=sp.getString("password","")
+        if(autoPassword!="") {
+            account.setText(autoAccoun)
+            password.setText("********")
+            return true
+        }
+        else
+            return false
+
+    }
 
     private fun Animator1() {
         val animator1 = ObjectAnimator.ofFloat(logoView, "alpha", 1f, 0f)

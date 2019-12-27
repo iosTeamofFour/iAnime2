@@ -46,6 +46,7 @@ public class UserServices {
     }
 
     public void Login(LoginAndRegisterAccountInfo LoginInfo, TaskPostExecuteWrapper<LoginResponse> HandleResult) {
+
         new PostLoginInfoTask(LoginResult -> {
             if(LoginResult.getStatusCode() == 0 && !SaveAccessToken(LoginResult.getToken())) {
                 throw new IllegalStateException("Cannot save JWT Token to SharedPreferences");

@@ -52,7 +52,7 @@ public class DownLoadImageService implements Runnable {
     public void saveImage(Context context, Bitmap bmp) {
         // 首先保存图片
         String file = GetAppCachePath();
-        String fileName = "新建文件夹";
+        String fileName = "works";
         File appDir = new File(file, fileName);
         if (!appDir.exists()) {
             appDir.mkdirs();
