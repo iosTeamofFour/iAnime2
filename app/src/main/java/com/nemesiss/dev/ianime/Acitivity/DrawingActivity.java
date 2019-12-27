@@ -12,9 +12,16 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.Toast;
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 import cn.finalteam.rxgalleryfinal.RxGalleryFinal;
 import cn.finalteam.rxgalleryfinal.bean.MediaBean;
 import cn.finalteam.rxgalleryfinal.imageloader.ImageLoaderType;
@@ -23,7 +30,9 @@ import cn.finalteam.rxgalleryfinal.rxbus.event.ImageMultipleResultEvent;
 import com.bumptech.glide.Glide;
 import com.dingmouren.colorpicker.ColorPickerDialog;
 import com.dingmouren.colorpicker.OnColorPickerListener;
+import com.nemesiss.dev.ianime.Adapter.ColorizeTaskListAdapterKt;
 import com.nemesiss.dev.ianime.Model.Model.Drafting.AnchorPoint;
+import com.nemesiss.dev.ianime.Model.Model.Drafting.ColorizeTask;
 import com.nemesiss.dev.ianime.Model.Model.Drafting.HintPoint;
 import com.nemesiss.dev.ianime.Model.Model.Drafting.Point;
 import com.nemesiss.dev.ianime.Model.Model.Request.PostColorRequestInfo;
@@ -32,15 +41,13 @@ import com.nemesiss.dev.ianime.Services.DownLoadImageService;
 import com.nemesiss.dev.ianime.Tasks.GetQueryColorProgressTask;
 import com.nemesiss.dev.ianime.Tasks.PostColorTask;
 import com.nemesiss.dev.ianime.Utils.AppUtils;
+import com.nemesiss.dev.ianime.Utils.UUIDGenerator;
 import com.nemesiss.dev.ianime.View.MyDrawView;
 import com.nemesiss.dev.ianime.View.PinchImageView;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class DrawingActivity extends iAnimeActivity {
@@ -55,11 +62,21 @@ public class DrawingActivity extends iAnimeActivity {
     private ImageButton anchor;
     private ImageButton back;
     private ImageButton markPoint;
-
     private Uri currUri;
     private String receipt;
 
+    private List<ColorizeTask> CurrentTaskList;
+    private ColorizeTaskListAdapterKt CurrentTaskListAdapter;
+
     static CircleImageView paint;
+
+    // 多功能键处理对象
+
+    @BindView(R.id.ColorizeTaskList)
+    RecyclerView ColorizeTaskRecycler;
+
+    private AlertDialog ShownTaskDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,6 +88,7 @@ public class DrawingActivity extends iAnimeActivity {
         myDrawView.SetBackgroundPinchIv(PinchIv);
 
         LoadImage();
+        InitTaskListAdapter();
 
         paint = findViewById(R.id.paint);
         paint.setOnClickListener(v -> {
@@ -117,29 +135,71 @@ public class DrawingActivity extends iAnimeActivity {
 
         ImageButton publish = findViewById(R.id.publish);
         publish.setOnClickListener(v -> {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(DrawingActivity.this);
-            dialog.setTitle("提交上色请求");
-            dialog.setMessage("确定要提交上色请求吗？");
-            dialog.setCancelable(false);
-            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                    startColor();
-
-                }
-            });
-            dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-            dialog.show();
+            BuildColorizeTaskListDialog();
+//            AlertDialog.Builder dialog = new AlertDialog.Builder(DrawingActivity.this);
+//            dialog.setTitle("提交上色请求");
+//            dialog.setMessage("确定要提交上色请求吗？");
+//            dialog.setCancelable(false);
+//            dialog.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//
+//                    BuildColorizeTaskListDialog();
+//
+////                    startColor();
+//                }
+//            });
+//            dialog.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//
+//                }
+//            });
+//            dialog.show();
         });
+    }
 
+
+    private void InitTaskListAdapter() {
+        CurrentTaskList = new ArrayList<>();
+        CurrentTaskList.add(new ColorizeTask((int)AppUtils.Date2UnixStamp(new Date()), UUIDGenerator.Generate()).setFinished(true));
+        CurrentTaskListAdapter = new ColorizeTaskListAdapterKt(CurrentTaskList,this);
+    }
+
+    private void BuildColorizeTaskListDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = View.inflate(this, R.layout.colorization_task_layout, null);
+        builder.setView(view);
+        builder.setTitle("正在处理的上色请求");
+        ButterKnife.bind(this,view);
+        ColorizeTaskRecycler.setAdapter(CurrentTaskListAdapter);
+        ColorizeTaskRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayout.VERTICAL,false));
+        ShownTaskDialog = builder.create();
+        ShownTaskDialog.show();
+    }
+
+
+    @OnClick({R.id.SendColorizeReq})
+    void SendColorizeReq(View view) {
+        CurrentTaskList.add(new ColorizeTask((int)AppUtils.Date2UnixStamp(new Date()), UUIDGenerator.Generate()));
+        CurrentTaskListAdapter.notifyDataSetChanged();
+    }
+
+    @OnClick({R.id.EditWorkInfo})
+    void EditWorkInfo(View view) {
 
     }
+
+    @OnClick({R.id.PublishWork})
+    void PublishWork(View view) {
+
+    }
+
+    @OnClick({R.id.SaveWorkToLocal})
+    void SaveWorkToLocal(View view) {
+
+    }
+
 
     private List<List<Float>> getColorPointsList() {
         double DrawviewWidth = (double) myDrawView.getWidth(), DrawviewHeight = (double) myDrawView.getHeight();
@@ -315,5 +375,4 @@ public class DrawingActivity extends iAnimeActivity {
             default:
         }
     }
-
 }

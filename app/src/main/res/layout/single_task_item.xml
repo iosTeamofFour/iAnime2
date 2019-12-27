@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_marginBottom="4dp"
+                android:layout_height="wrap_content">
+
+    <ImageView android:layout_width="72dp" android:layout_height="72dp"
+               android:id="@+id/TaskImagePreview"
+               android:scaleType="centerInside" android:src="@drawable/image0"/>
+
+    <Button android:layout_width="wrap_content"
+            android:layout_toEndOf="@id/TaskImagePreview"
+            android:layout_centerVertical="true"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:textSize="10pt"
+            android:textStyle="normal"
+            android:gravity="start|center_vertical"
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/WorkTaskItem"/>
+
+    <TextView android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_toEndOf="@id/WorkTaskItem"
+              android:layout_centerVertical="true"
+              android:textAllCaps="false"
+              android:text="等待"/>
+
+</RelativeLayout>
