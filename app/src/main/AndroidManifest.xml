@@ -23,13 +23,13 @@
             android:supportsRtl="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".Acitivity.WorkDetailActivity">
-
         </activity>
         <activity android:name=".Acitivity.DrawingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
         <activity
                 android:name=".Acitivity.DiscoverActivity">
@@ -44,6 +44,7 @@
                 android:name=".Acitivity.SplashActivity"
                 android:theme="@style/SplashScreenTheme">
 
+
         </activity>
         <activity android:name=".Acitivity.PersonIndexActivity">
         </activity>
@@ -54,6 +55,7 @@
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
         </activity>
         <activity
                 android:name=".Acitivity.Util.PreviewSelectedImageActivity"

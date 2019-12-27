@@ -285,7 +285,7 @@ public class DrawingActivity extends iAnimeActivity {
 
         @Override
         public void onColorChange(ColorPickerDialog dialog, int color) {//实时监听颜色变化
-
+            paint.setBackgroundColor(color);
         }
 
         @Override

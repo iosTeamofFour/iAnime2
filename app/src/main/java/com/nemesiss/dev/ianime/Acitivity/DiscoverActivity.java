@@ -63,7 +63,6 @@ public class DiscoverActivity extends iAnimeActivity {
         });
 
         //定义TabLayout
-
         //TabLayout的事件
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -76,7 +75,6 @@ public class DiscoverActivity extends iAnimeActivity {
                 }
 
             }
-
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
                 //未选中tab的逻辑
